@@ -35,3 +35,35 @@
   text-align: center;
   margin-top: 10px;
 }
+
+
+.po-container {
+  background: #fff;
+  border: 1px solid #bbb;
+  padding: 18px;
+  max-width: 950px;
+  margin: 24px auto;
+  font-family: Arial, sans-serif;
+}
+
+.po-header-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px 18px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 12px;
+}
+
+.po-header-grid label {
+  color: #c03;
+  font-weight: bold;
+}
+
+.po-header-grid div {
+  padding: 2px 0;
+}
+
+.po-header-grid span {
+  color: #111;
+}
+

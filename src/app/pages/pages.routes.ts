@@ -7,12 +7,14 @@ import { ManageSuppliers } from './managesuppliers/managesuppliers';
 import { ManageInvoices } from './manageinvoices/manageinvoices';
 import { Changepassword } from './changepassword/changepassword';
 import { ManageDeliveryschedules } from './managedeliveryschedules/managedeliveryschedules';
+import { ViewDeliverySchedules } from './viewdeliveryschedules/viewdeliveryschedules';
 
 export default [
     
     {path: 'purchaseorder', component:  PurchaseOrder  },
     {path: 'managepos', component: ManagePOs},
     {path:'viewmanagepos', component: ViewManagePOs},
+    {path: 'viewmanagedeliveryschedules', component: ViewDeliverySchedules},
     {path: 'manageadmins', component: ManageAdmins},
     {path:'managedeliveryschedules', component:ManageDeliveryschedules},
     {path: 'changepassword', component: Changepassword},

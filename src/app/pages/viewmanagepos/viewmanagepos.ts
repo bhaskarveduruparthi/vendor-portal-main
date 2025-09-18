@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { AppFloatingConfigurator } from '../../layout/component/app.floatingconfigurator';
-
+import { TextareaModule } from 'primeng/textarea';
 
 interface Item {
   slNo: number;
@@ -22,68 +22,74 @@ interface Item {
 @Component({
     selector: 'app-viewmanagepos',
     standalone: true,
-    imports: [RouterModule, AppFloatingConfigurator, ButtonModule,PanelModule, TableModule],
+    imports: [RouterModule, AppFloatingConfigurator,TextareaModule, ButtonModule,PanelModule, TableModule],
+    styles:[`
+      .po-container {
+  
+  
+  padding: 18px;
+  max-width: 950px;
+  margin: 24px auto;
+  
+  font-family: Arial, sans-serif;
+}
+
+.po-header-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px 18px;
+  
+  padding-bottom: 12px;
+}
+
+.po-header-grid label {
+  color: #fff;
+  font-weight: bold;
+}
+
+.po-header-grid div {
+  padding: 2px 0;
+}
+
+.po-header-grid span {
+  color: #fff;
+}
+`
+    ],
     template: ` <app-floating-configurator />
+    
+    
    <div class="container">
-        <p-panel header="Scheduling/Agreement PO">
-            
-            <div class="formgrid grid header-panel">
-  <!-- First Row: Three Columns -->
-  <div class="field col-12 md:col-4">
-    <label><strong>PO Number & Date:</strong></label>
-    <span>{{headerInfo.poNumber}}</span>
-  </div>
-  <div class="field col-12 md:col-4">
-    <label><strong>Valid From:</strong></label>
-    <span>{{headerInfo.validFrom}}</span>
-  </div>
-  <div class="field col-12 md:col-4">
-    <label><strong>Supplier Name:</strong></label>
-    <span>{{headerInfo.supplierName}}</span>
-  </div>
+      <p-panel>
+        <div class="po-container">
+      <div class="po-header-grid">
+        <div><label>PO Number & Date:</label> <span>{{headerInfo.poNumber}}</span></div>
+        <div><label>Valid From:</label> <span>{{headerInfo.validFrom}}</span></div>
+        <div><label>Supplier Name:</label> <span>{{headerInfo.supplierName}}</span></div>
+        <div><label>Valid To:</label> <span>{{headerInfo.validTo}}</span></div>
+        <div><label>Supplier Code:</label> <span>{{headerInfo.supplierCode}}</span></div>
+        <div><label>Supplier Address:</label> <span>{{headerInfo.address}}</span></div>
+        <div><label>TIN No:</label> <span>{{headerInfo.tinNo}}</span></div>
+        <div><label>Contact Person:</label> <span>{{headerInfo.contactPerson}}</span></div>
+        <div><label>ECC No:</label> <span>{{headerInfo.eccNo}}</span></div>
+        <div><label>Service Tax No:</label> <span>{{headerInfo.serviceTaxNo}}</span></div>
+        <div><label>PAN No:</label> <span>{{headerInfo.panNo}}</span></div>
+        <div></div>
 
-  <!-- Second Row: Three Columns -->
-  <div class="field col-12 md:col-4">
-    <label><strong>Valid To:</strong></label>
-    <span>{{headerInfo.validTo}}</span>
-  </div>
-  <div class="field col-12 md:col-4">
-    <label><strong>Supplier Code:</strong></label>
-    <span>{{headerInfo.supplierCode}}</span>
-  </div>
-  <div class="field col-12 md:col-4">
-    <label><strong>Supplier Address:</strong></label>
-    <span>{{headerInfo.address}}</span>
-  </div>
+      </div>
+         <div>
+          <label><strong>Header Text:</strong></label>
+          <br>
+        <textarea rows="5"cols="80" pTextarea [autoResize]="true" [value]="headerInfo.headertext" ></textarea>
+        </div>
+        
+        </div>
+      </p-panel>
+      
+  
+  
+  <br>  
 
-  <!-- Third Row: Three Columns -->
-  <div class="field col-12 md:col-4">
-    <label><strong>TIN No:</strong></label>
-    <span>{{headerInfo.tinNo}}</span>
-  </div>
-  <div class="field col-12 md:col-4">
-    <label><strong>Contact Person:</strong></label>
-    <span>{{headerInfo.contactPerson}}</span>
-  </div>
-  <div class="field col-12 md:col-4">
-    <label><strong>ECC No:</strong></label>
-    <span>{{headerInfo.eccNo}}</span>
-  </div>
-
-  <!-- Fourth Row: Three Columns -->
-  <div class="field col-12 md:col-4">
-    <label><strong>Service Tax No:</strong></label>
-    <span>{{headerInfo.serviceTaxNo}}</span>
-  </div>
-  <div class="field col-12 md:col-4">
-    <label><strong>PAN No:</strong></label>
-    <span>{{headerInfo.panNo}}</span>
-  </div>
-</div>
-
-            
-
-        </p-panel>
     
       
    
@@ -126,7 +132,7 @@ interface Item {
       </tr>
     </ng-template>
   </p-table>
-
+  <br>
   <div class="button-row">
     <button pButton type="button" label="Back" class="p-button-sm p-button-danger" (click)="onBack()"></button>
   </div>
@@ -152,7 +158,8 @@ export class ViewManagePOs {
   contactPerson: 'Krishna',
   eccNo: 'AABPKZ067XM001',
   serviceTaxNo: 'AABPKZ067XM001',
-  panNo: 'AABFK2067N'
+  panNo: 'AABFK2067N',
+  headertext: 'NA'
 };
   // TABLE DATA
   items: Item[] = [

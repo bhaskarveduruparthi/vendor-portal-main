@@ -108,100 +108,87 @@ interface ExportColumn {
             </ng-template>
         </p-toolbar>
 
-        <p-table
-            #dt
-            [value]="invoices()"
-            [rows]="10"
-            [columns]="cols"
-            [paginator]="true"
-            [globalFilterFields]="['suppliercode','suppliername', 'purchaseorderno', 'invoice_no','invoice_date', ]"
-            [tableStyle]="{ 'min-width': '75rem' }"
-            [(selection)]="selectedinvoices"
-            [rowHover]="true"
-            dataKey="id"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Invoices"
-            [showCurrentPageReport]="true"
-            [rowsPerPageOptions]="[10, 20, 30]"
-        >
-            <ng-template #caption>
-                <div class="flex items-center justify-between">
-                    <h5 class="m-0">Manage Invoice Details</h5>
-                     
-                    <p-button label="Export to Excel"  icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
-                </div>
-            </ng-template>
-            <ng-template #header>
-                <tr>
-                    <th style="width: 3rem">
-                        <p-tableHeaderCheckbox />
-                    </th>
-                    
-                    <th pSortableColumn="suppliercode" style="min-width:16rem">
-                        Supplier Code
-                        <p-sortIcon field="suppliercode" />
-                    </th>
-                    
-                    <th pSortableColumn="suppliername" style="min-width: 8rem">
-                        Supplier Name
-                        <p-sortIcon field="suppliername" />
-                    </th>
-                    <th pSortableColumn="purchaseorderno" style="min-width:10rem">
-                        Purchase Order No
-                        <p-sortIcon field="purchaseorderno" />
-                    </th>
-                   
-                    <th pSortableColumn="invoice_no"   style="min-width: 12rem">
-                        Invoice No
-                        <p-sortIcon field="invoice_no" />
-                    </th>
-                    <th pSortableColumn="invoice_date"   style="min-width: 12rem">
-                       Invoice Date
-                        <p-sortIcon field="invoice_date" />
-                    </th>
-                     
-                    <th    style="min-width: 12rem">
-                        Invoice Details
-                    </th>
-                    <th    style="min-width: 12rem">
-                        Bin/Truck Information
-                    </th>
-                    <th    style="min-width: 12rem">
-                        Actions
-                    </th>
-                    
-                </tr>
-            </ng-template>
-            <ng-template #body let-invoice>
-                <tr>
-                    
-                     <td style="width: 3rem">
-                        <p-tableCheckbox [value]="invoice" />
-                    </td>
-                    <td style="min-width: 12rem">{{ invoice.suppliercode }}</td>
-                    <td style="min-width: 16rem">{{ invoice.suppliername }}</td>
-                    <td style="min-width: 16rem">{{ invoice.purchaseorderno }}</td>
-                    <td style="min-width: 16rem">{{ invoice.invoice_no }}</td>
-                    <td style="min-width: 16rem">{{ invoice.invoice_date }}</td>
-                    
-                    
-                   
-                   
-                    
-                    <td>
-                        <p-button label="View" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="gotoView()" />
-                        <p-button  label="Print" [rounded]="true" [outlined]="true"  />
-                    </td>
-                    <td>
-                        
-                        <p-button  label="Update" [rounded]="true" [outlined]="true"  />
-                    </td>
-                    <td>
-                        
-                        <p-button  label="Delete" [rounded]="true" [outlined]="true"  />
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
+       <p-table
+    #dt
+    [value]="invoices()"
+    [rows]="10"
+    [columns]="cols"
+    [paginator]="true"
+    [globalFilterFields]="['supplier_code', 'supplier_name', 'purchase_order_no', 'invoice_no', 'invoice_date']"
+    [tableStyle]="{ 'min-width': '75rem' }"
+    [(selection)]="selectedinvoices"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Invoices"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 20, 30]"
+>
+    <ng-template #caption>
+        <div class="flex items-center justify-between">
+            <h5 class="m-0">Manage Invoice Details</h5>
+            <p-button label="Export to Excel" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
+        </div>
+    </ng-template>
+    <ng-template #header>
+        <tr>
+            <th style="width: 3rem">
+                <p-tableHeaderCheckbox />
+            </th>
+            <th pSortableColumn="supplier_code" style="min-width:16rem">
+                Supplier Code
+                <p-sortIcon field="supplier_code" />
+            </th>
+            <th pSortableColumn="supplier_name" style="min-width: 8rem">
+                Supplier Name
+                <p-sortIcon field="supplier_name" />
+            </th>
+            <th pSortableColumn="purchase_order_no" style="min-width:10rem">
+                Purchase Order No
+                <p-sortIcon field="purchase_order_no" />
+            </th>
+            <th pSortableColumn="invoice_no" style="min-width: 12rem">
+                Invoice No
+                <p-sortIcon field="invoice_no" />
+            </th>
+            <th pSortableColumn="invoice_date" style="min-width: 12rem">
+                Invoice Date
+                <p-sortIcon field="invoice_date" />
+            </th>
+            <th style="min-width: 12rem">
+                Invoice Details
+            </th>
+            <th style="min-width: 12rem">
+                Bin/Truck Information
+            </th>
+            <th style="min-width: 12rem">
+                Actions
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-invoice>
+        <tr>
+            <td style="width: 3rem">
+                <p-tableCheckbox [value]="invoice" />
+            </td>
+            <td style="min-width: 12rem">{{ invoice.supplier_code }}</td>
+            <td style="min-width: 16rem">{{ invoice.supplier_name }}</td>
+            <td style="min-width: 16rem">{{ invoice.purchase_order_no }}</td>
+            <td style="min-width: 16rem">{{ invoice.invoice_no }}</td>
+            <td style="min-width: 16rem">{{ invoice.invoice_date }}</td>
+            <td>
+                <p-button label="View" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="gotoView()" />
+                <p-button label="Print" [rounded]="true" [outlined]="true" />
+            </td>
+            <td>
+                <p-button label="Update" [rounded]="true" [outlined]="true" />
+            </td>
+            <td>
+                <p-button label="Delete" [rounded]="true" [outlined]="true" />
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
 
        
 
@@ -240,24 +227,23 @@ export class ManageInvoices implements OnInit {
     }
 
     ngOnInit() {
-        this.loadDemoData();
+        this.loadData();
     }
 
-    loadDemoData() {
-       this.manageinvoiceservice.getInvoices().then((data) => {
+    loadData() {
+       this.manageinvoiceservice.getInvoices().subscribe((data:any) => {
             this.invoices.set(data);
         });
 
         
 
         this.cols = [
-            { field: 'suppliercode', header: 'Supplier Code', customExportHeader: 'Supplier Code' },
-            { field: 'suppliername', header: 'Supplier Name' },
-            { field: 'purchaseorderno', header: 'Purchase Order No' },
-            { field: 'invoice_no', header: 'Invoice No' },
-             { field: 'invoice_date', header: 'Invoice Date' },
-             
-        ];
+    { field: 'supplier_code', header: 'Supplier Code', customExportHeader: 'Supplier Code' },
+    { field: 'supplier_name', header: 'Supplier Name' },
+    { field: 'purchase_order_no', header: 'Purchase Order No' },
+    { field: 'invoice_no', header: 'Invoice No' },
+    { field: 'invoice_date', header: 'Invoice Date' }
+];
 
         this.exportColumns = this.cols.map((col) => ({ title: col.header, dataKey: col.field }));
     }

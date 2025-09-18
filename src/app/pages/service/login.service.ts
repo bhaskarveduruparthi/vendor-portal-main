@@ -11,8 +11,8 @@ export class LoginService {
     this.url = `${this._url.getApiUrl()}`
   }
 
-  getToken(loginid:string,password:string) {
-    const userData = {loginid,password};
+  getToken(loginid:string,password:string, userType:string) {
+    const userData = {loginid,password, userType};
     return this.http.post(`${this.url}users/login`, userData);
   }
 

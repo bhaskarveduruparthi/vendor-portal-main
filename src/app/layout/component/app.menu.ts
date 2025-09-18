@@ -81,16 +81,46 @@ export class AppMenu {
             
         ];
 
+        supplier_model: any[] = [
+            {
+                label: 'Contents',
+                items: [{ label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/app'] },
+               
+                
+                
+                { label: 'Manage Scheduling Agreement', icon: 'pi pi-calendar-clock', routerLink: ['/app/pages/managepos'] },
+                 { label: 'Manage Delivery Schedules', icon: 'pi pi-calendar-clock', routerLink: ['/app/pages/managedeliveryschedules'] },
+                { label: 'Manage Invoice Details', icon: 'pi pi-receipt', routerLink: ['/app/pages/manageinvoices'] },
+                
+                
+                { label: 'Manage Circulars', icon: 'pi pi-circle', routerLink: ['/'] },
+                { label: 'Change Password', icon: 'pi pi-key', routerLink: ['/app/pages/changepassword'] },
+                { label: 'Reports', 
+                    items:[{ label: 'Statement of Accounts', icon: 'pi pi-file', routerLink: ['/'] },
+                          { label: 'Payment Advice', icon: 'pi pi-file', routerLink: ['/'] },
+                          
+                    ]
+                },
+            ],
+                
+
+            },
+            
+            
+            
+        ];
+
     user : Admin | null = {}
     constructor(public layoutService: LayoutService,private authenticationService: AuthenticationService) {
       this.authenticationService.user.subscribe((x) => {
         if(x?.loginid == 'SuperAdmin') {
           this.model = this.superadmin_model
         }
-         
-        
+        else if(x?.loginid == 'Admin'){
+            this.model = this.admin_model;
+        }
         else{
-          this.model = this.admin_model;
+            this.model = this.supplier_model;
         }
       });
     }

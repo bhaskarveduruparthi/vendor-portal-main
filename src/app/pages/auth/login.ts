@@ -8,6 +8,7 @@ import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { LoginService } from '../service/login.service';
 import { MessageModule } from 'primeng/message';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { MessageService } from 'primeng/api';
 import { AuthenticationService } from '@/pages/service/authentication.service';
 import { ToastModule } from 'primeng/toast';
@@ -16,7 +17,7 @@ import { LayoutService } from '@/layout/service/layout.service';
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, ToastModule, MessageModule, FormsModule, RouterModule, RippleModule, ],
+    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, ToastModule,RadioButtonModule, MessageModule, FormsModule, RouterModule, RippleModule, ],
     providers: [MessageService],
     template: `
         
@@ -30,7 +31,13 @@ import { LayoutService } from '@/layout/service/layout.service';
                             <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Welcome !</div>
                             
                         </div>
+                        <div class="flex gap-4 mb-8">
+                          <p-radioButton name="userType" value="Suppliers" [(ngModel)]="userType" inputId="suppliers"></p-radioButton>
+<label for="suppliers">Suppliers</label>
 
+<p-radioButton name="userType" value="Admin" [(ngModel)]="userType" inputId="admin"></p-radioButton>
+<label for="admin">Admin</label>
+                        </div>
                         <div>
                            <label for="email1" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Login Id</label>
                             <input pInputText id="email1" type="text" class="w-full md:w-120 mb-8" [(ngModel)]="loginid" />
@@ -39,10 +46,7 @@ import { LayoutService } from '@/layout/service/layout.service';
                             <p-password id="password1" [(ngModel)]="password"  [toggleMask]="true" styleClass="mb-4" [fluid]="true" [feedback]="false"></p-password>
 
                             <div class="flex items-center justify-between mt-2 mb-8 gap-8">
-                                <div class="flex items-center">
-                                    <p-checkbox [(ngModel)]="checked" id="rememberme1" binary class="mr-2"></p-checkbox>
-                                    <label for="rememberme1">Remember me</label>
-                                </div>
+                               
                                 <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary">Forgot password?</span>
                             </div>
                             <p-button label="Sign In" styleClass="w-full" (click)="login()"></p-button>
@@ -60,13 +64,16 @@ export class Login {
 
     checked: boolean = false;
 
+    userType: string = 'Suppliers';
+
     constructor(public layoutService: LayoutService, private router: Router,
               public loginservice:LoginService ,public auth:AuthenticationService , public messageservice: MessageService) { }
 
     login() {
+    console.log(this.userType)
     console.log(this.loginid)
     console.log(this.password)
-    this.loginservice.getToken(this.loginid , this.password)
+    this.loginservice.getToken(this.loginid , this.password, this.userType)
       .subscribe((data:any)=>{
         console.log(data);
         this.auth.tokenValue = data
@@ -76,7 +83,7 @@ export class Login {
         this.getuser()
         this.messageservice.add({ severity: 'success', summary: 'Success', detail: 'Login Successfull' });
       },(err)=>{
-       
+        this.messageservice.add({ severity: 'error', summary: 'Error', detail: 'Login Unsuccessfull' });
         console.log(err.error.message)
         alert(err.error.message)
        
@@ -97,7 +104,7 @@ export class Login {
           this.router.navigate(['/app']);
         }
         else{
-            this.router.navigate(['/auth/login']);
+            this.router.navigate(['/app']);
         }
 
       })

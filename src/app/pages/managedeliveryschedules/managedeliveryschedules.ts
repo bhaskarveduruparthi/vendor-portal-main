@@ -83,10 +83,7 @@ interface ExportColumn {
         <p-toolbar styleClass="mb-6">
             <ng-template #start>
             
-                  <div class="form-group">
-  <label for="suppliercode">Supplier Code</label>
- <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search" />
-</div>
+                  
 
 <div class="form-group">
   <label for="suppliername">Supplier Name</label>
@@ -112,107 +109,93 @@ interface ExportColumn {
         </p-toolbar>
 
         <p-table
-            #dt
-            [value]="deliveryschedules()"
-            [rows]="10"
-            [columns]="cols"
-            [paginator]="true"
-            [globalFilterFields]="['suppliername' ]"
-            [tableStyle]="{ 'min-width': '75rem' }"
-            [(selection)]="selecteddeliveryschedules"
-            [rowHover]="true"
-            dataKey="id"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Delivery Schedules"
-            [showCurrentPageReport]="true"
-            [rowsPerPageOptions]="[10, 20, 30]"
-        >
-            <ng-template #caption>
-                <div class="flex items-center justify-between">
-                    <h5 class="m-0">Manage Delivery Schedules</h5>
-                     
-                    <p-button label="Export to Excel"  icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
-                </div>
-            </ng-template>
-            <ng-template #header>
-                <tr>
-                    
-                    
-                    
-                    
-                    <th pSortableColumn="suppliername" style="min-width: 8rem">
-                        Supplier Name
-                        <p-sortIcon field="suppliername" />
-                    </th>
-                    <th pSortableColumn="purchaseorderno" style="min-width:10rem">
-                        Purchase Order No
-                        <p-sortIcon field="purchaseorderno" />
-                    </th>
-                   
-                    <th pSortableColumn="purchaseorder_date"   style="min-width: 12rem">
-                        Purchase Order Date
-                        <p-sortIcon field="purchaseorder_date" />
-                    </th>
-                    <th pSortableColumn="deliveryschedule_no"   style="min-width: 12rem">
-                       Delivery Schedule No
-                        <p-sortIcon field="deliveryschedule_no" />
-                    </th>
-                    <th pSortableColumn="deliveryschedule_date"   style="min-width: 12rem">
-                       Delivery Schedule Date
-                        <p-sortIcon field="deliveryschedule_date" />
-                    </th>
-                     
-                    <th    style="min-width: 12rem">
-                       Delivery Schedule
-                    </th>
-                    <th pSortableColumn="created_by"   style="min-width: 12rem">
-                       Created By
-                        <p-sortIcon field="created_by" />
-                    </th>
-                    <th    style="min-width: 12rem">
-                        Update Delivery Schedule
-                    </th>
-                    <th pSortableColumn="created_date"   style="min-width: 12rem">
-                       Created Date
-                        <p-sortIcon field="created_date" />
-                    </th>
-                    <th pSortableColumn="lastupdated_date"   style="min-width: 12rem">
-                        Last Updated Date
-                        <p-sortIcon field="lastupdated_date" />
-                    </th>
-                    <th pSortableColumn="lastupdated_by"   style="min-width: 12rem">
-                       Last Updated By
-                        <p-sortIcon field="lastupdated_by" />
-                    </th>
-                
-                    
-                    
-                </tr>
-            </ng-template>
-            <ng-template #body let-deliveryschedule>
-                <tr>
-                    
-                     
-                    
-                    <td style="min-width: 16rem">{{ deliveryschedule.suppliername }}</td>
-                    <td style="min-width: 16rem">{{ deliveryschedule.purchaseorderno }}</td>
-                    <td style="min-width: 16rem">{{ deliveryschedule.purchaseorder_date }}</td>
-                    <td style="min-width: 16rem">{{ deliveryschedule.deliveryschedule_no }}</td>
-                    <td style="min-width: 16rem">{{ deliveryschedule.deliveryschedule_date }}</td>
-                    <td>
-                        <p-button label="View" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="gotoView()" />
-                        <p-button  label="Print" [rounded]="true" [outlined]="true"  />
-                    </td>
-                    <td style="min-width: 16rem">{{ deliveryschedule.created_by }}</td>
-                    <td>
-                        
-                        <p-button  label="Update" [rounded]="true" [outlined]="true"  />
-                    </td>
-                    <td style="min-width: 16rem">{{ deliveryschedule.created_date }}</td>
-                    <td style="min-width: 16rem">{{ deliveryschedule.lastupdated_date}}</td>
-                    <td style="min-width: 16rem">{{ deliveryschedule.lastupdated_by }}</td>
-                </tr>
-            </ng-template>
-        </p-table>
+    #dt
+    [value]="deliveryschedules()"
+    [rows]="10"
+    [paginator]="true"
+    [globalFilterFields]="['supplier_name']"
+    [tableStyle]="{ 'min-width': '75rem' }"
+    [(selection)]="selecteddeliveryschedules"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Delivery Schedules"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 20, 30]"
+>
+    <ng-template #caption>
+        <div class="flex items-center justify-between">
+            <h5 class="m-0">Manage Delivery Schedules</h5>
+            <p-button label="Export to Excel" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
+        </div>
+    </ng-template>
+    <ng-template #header>
+        <tr>
+            <th pSortableColumn="supplier_name" style="min-width: 8rem">
+                Supplier Name
+                <p-sortIcon field="supplier_name" />
+            </th>
+            <th pSortableColumn="purchase_order_no" style="min-width:10rem">
+                Purchase Order No
+                <p-sortIcon field="purchase_order_no" />
+            </th>
+            <th pSortableColumn="purchase_order_date" style="min-width: 12rem">
+                Purchase Order Date
+                <p-sortIcon field="purchase_order_date" />
+            </th>
+            <th pSortableColumn="delivery_schedule_no" style="min-width: 12rem">
+                Delivery Schedule No
+                <p-sortIcon field="delivery_schedule_no" />
+            </th>
+            <th pSortableColumn="delivery_schedule_date" style="min-width: 12rem">
+                Delivery Schedule Date
+                <p-sortIcon field="delivery_schedule_date" />
+            </th>
+            <th style="min-width: 12rem">
+                Delivery Schedule
+            </th>
+            <th pSortableColumn="created_by" style="min-width: 12rem">
+                Created By
+                <p-sortIcon field="created_by" />
+            </th>
+            <th style="min-width: 12rem">
+                Update Delivery Schedule
+            </th>
+            <th pSortableColumn="created_date" style="min-width: 12rem">
+                Created Date
+                <p-sortIcon field="created_date" />
+            </th>
+            <th pSortableColumn="last_updated_date" style="min-width: 12rem">
+                Last Updated Date
+                <p-sortIcon field="last_updated_date" />
+            </th>
+            <th pSortableColumn="last_updated_by" style="min-width: 12rem">
+                Last Updated By
+                <p-sortIcon field="last_updated_by" />
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-deliveryschedule>
+        <tr>
+            <td style="min-width: 16rem">{{ deliveryschedule.supplier_name }}</td>
+            <td style="min-width: 16rem">{{ deliveryschedule.purchase_order_no }}</td>
+            <td style="min-width: 16rem">{{ deliveryschedule.purchase_order_date }}</td>
+            <td style="min-width: 16rem">{{ deliveryschedule.delivery_schedule_no }}</td>
+            <td style="min-width: 16rem">{{ deliveryschedule.delivery_schedule_date }}</td>
+            <td>
+                <p-button label="View" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="gotoView()" />
+                <p-button label="Print" [rounded]="true" [outlined]="true" />
+            </td>
+            <td style="min-width: 16rem">{{ deliveryschedule.created_by }}</td>
+            <td>
+                <p-button label="Update" [rounded]="true" [outlined]="true" />
+            </td>
+            <td style="min-width: 16rem">{{ deliveryschedule.created_date }}</td>
+            <td style="min-width: 16rem">{{ deliveryschedule.last_updated_date }}</td>
+            <td style="min-width: 16rem">{{ deliveryschedule.last_updated_by }}</td>
+        </tr>
+    </ng-template>
+</p-table>
+
 
        
 
@@ -240,7 +223,7 @@ export class ManageDeliveryschedules implements OnInit {
     cols!: Column[];
 
     constructor(
-        private managedeliveryservice: ManageDeliverySchedulesService,
+        public managedeliveryservice: ManageDeliverySchedulesService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         public router: Router
@@ -251,30 +234,27 @@ export class ManageDeliveryschedules implements OnInit {
     }
 
     ngOnInit() {
-        this.loadDemoData();
+        this.loadData();
     }
 
-    loadDemoData() {
-       this.managedeliveryservice.getDeliveryschedules().then((data) => {
+    loadData() {
+       this.managedeliveryservice.getDeliveryschedules().subscribe((data:any) => {
             this.deliveryschedules.set(data);
         });
 
         
 
         this.cols = [
-            
-            { field: 'suppliername', header: 'Supplier Name' },
-            { field: 'purchaseorderno', header: 'Purchase Order No' },
-            { field: 'purchaseorder_date', header: 'Purchase Order Date' },
-            { field: 'deliveryschedule_no', header: 'Delivery Schedule No' },
-            { field: 'deliveryschedule_date', header: 'Delivery Schedule Date' },
-            { field: 'created_by', header: 'Created By' },
-            { field: 'created_date', header: 'Created Date' },
-            { field: 'lastupdated_date', header: 'Last Update Date' },
-            { field: 'lastupdated_by', header: 'Last Update By' },
-            
-             
-        ];
+    { field: 'supplier_name', header: 'Supplier Name' },
+    { field: 'purchase_order_no', header: 'Purchase Order No' },
+    { field: 'purchase_order_date', header: 'Purchase Order Date' },
+    { field: 'delivery_schedule_no', header: 'Delivery Schedule No' },
+    { field: 'delivery_schedule_date', header: 'Delivery Schedule Date' },
+    { field: 'created_by', header: 'Created By' },
+    { field: 'created_date', header: 'Created Date' },
+    { field: 'last_updated_date', header: 'Last Update Date' },
+    { field: 'last_updated_by', header: 'Last Update By' }
+];
 
         this.exportColumns = this.cols.map((col) => ({ title: col.header, dataKey: col.field }));
     }
@@ -284,7 +264,7 @@ export class ManageDeliveryschedules implements OnInit {
     }
 
     gotoView(){
-        this.router.navigate(['/app/pages/viewmanagepos'])    }    
+        this.router.navigate(['/app/pages/viewmanagedeliveryschedules'])    }    
 
     
 
