@@ -7,7 +7,9 @@ interface InventoryStatus {
 }
 
 export interface Product {
-    id?: string;
+    suppliername?:string,
+    suppliercode?:string,
+    email?:string,
     plantcode?: string;
     pono?: string;
     podate?: string;

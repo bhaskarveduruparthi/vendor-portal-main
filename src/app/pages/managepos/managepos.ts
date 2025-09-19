@@ -97,7 +97,18 @@ interface ExportColumn {
                     <th style="width: 3rem">
                         <p-tableHeaderCheckbox />
                     </th>
-                    
+                    <th pSortableColumn="plantcode" style="min-width:16rem">
+                        Supplier Code
+                        <p-sortIcon field="name" />
+                    </th>
+                    <th pSortableColumn="plantcode" style="min-width:16rem">
+                        Supplier Name
+                        <p-sortIcon field="name" />
+                    </th>
+                    <th pSortableColumn="plantcode" style="min-width:16rem">
+                        Email Id
+                        <p-sortIcon field="name" />
+                    </th>
                     <th pSortableColumn="plantcode" style="min-width:16rem">
                         Plant Code
                         <p-sortIcon field="name" />
@@ -123,6 +134,9 @@ interface ExportColumn {
                     <td style="width: 3rem">
                         <p-tableCheckbox [value]="product" />
                     </td>
+                    <td style="min-width: 12rem">{{ product.suppliercode }}</td>
+                    <td style="min-width: 16rem">{{ product.suppliername }}</td>
+                    <td style="min-width: 16rem">{{ product.email }}</td>
                     <td style="min-width: 12rem">{{ product.plantcode }}</td>
                     <td style="min-width: 16rem">{{ product.pono }}</td>
                     <td style="min-width: 16rem">{{ product.podate }}</td>
@@ -186,6 +200,9 @@ export class ManagePOs implements OnInit {
         
 
         this.cols = [
+            { field: 'suppliercode', header: 'Supplier Code' },
+            { field: 'suppliername', header: 'Supplier Name' },
+            { field: 'email', header: 'Email Id' },
             { field: 'plantcode', header: 'Plant Code', customExportHeader: 'Plant Code' },
             { field: 'ponum', header: 'PO No' },
             { field: 'podate', header: 'PO Date' },
