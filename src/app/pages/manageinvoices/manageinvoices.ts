@@ -131,9 +131,7 @@ interface ExportColumn {
     </ng-template>
     <ng-template #header>
         <tr>
-            <th style="width: 3rem">
-                <p-tableHeaderCheckbox />
-            </th>
+            
             <th pSortableColumn="supplier_code" style="min-width:16rem">
                 Supplier Code
                 <p-sortIcon field="supplier_code" />
@@ -167,9 +165,7 @@ interface ExportColumn {
     </ng-template>
     <ng-template #body let-invoice>
         <tr>
-            <td style="width: 3rem">
-                <p-tableCheckbox [value]="invoice" />
-            </td>
+            
             <td style="min-width: 12rem">{{ invoice.supplier_code }}</td>
             <td style="min-width: 16rem">{{ invoice.supplier_name }}</td>
             <td style="min-width: 16rem">{{ invoice.purchase_order_no }}</td>

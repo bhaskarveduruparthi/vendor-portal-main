@@ -59,7 +59,7 @@ interface ExportColumn {
     template: `
         <p-toolbar styleClass="mb-6">
             <ng-template #start>
-               <p-button label="Add Supplier"  icon="pi pi-add" severity="secondary"  />
+               
             </ng-template>
 
             <ng-template #end>
@@ -132,9 +132,7 @@ interface ExportColumn {
                       Mobile Number
                         <p-sortIcon field="mobile_number" />
                     </th>
-                    <th    style="min-width: 12rem">
-                        Actions
-                    </th>
+                    
                     
                 </tr>
             </ng-template>
@@ -156,10 +154,7 @@ interface ExportColumn {
                    
                    
                     
-                    <td>
-                        <p-button label="Edit" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="gotoView()" />
-                        <p-button  label="Disable" [rounded]="true" [outlined]="true"  />
-                    </td>
+                    
                 </tr>
             </ng-template>
         </p-table>

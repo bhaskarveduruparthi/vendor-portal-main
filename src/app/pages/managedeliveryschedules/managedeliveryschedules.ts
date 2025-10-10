@@ -183,7 +183,7 @@ interface ExportColumn {
             <td style="min-width: 16rem">{{ deliveryschedule.delivery_schedule_date }}</td>
             <td>
                 <p-button label="View" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="gotoView()" />
-                <p-button label="Print" [rounded]="true" [outlined]="true" />
+                
             </td>
             <td style="min-width: 16rem">{{ deliveryschedule.created_by }}</td>
             <td>

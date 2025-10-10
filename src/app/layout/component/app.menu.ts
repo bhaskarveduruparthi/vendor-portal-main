@@ -35,7 +35,7 @@ export class AppMenu {
                 { label: 'Manage Invoice Details', icon: 'pi pi-receipt', routerLink: ['/app/pages/manageinvoices'] },
                 
                 
-                { label: 'Manage Circulars', icon: 'pi pi-circle', routerLink: ['/'] },
+                
                 { label: 'Change Password', icon: 'pi pi-key', routerLink: ['/app/pages/changepassword'] },
                 { label: 'Reports', 
                     items:[{ label: 'Statement of Accounts', icon: 'pi pi-file', routerLink: ['/'] },
@@ -64,7 +64,7 @@ export class AppMenu {
                 { label: 'Manage Invoice Details', icon: 'pi pi-receipt', routerLink: ['/app/pages/manageinvoices'] },
                 
                 
-                { label: 'Manage Circulars', icon: 'pi pi-circle', routerLink: ['/'] },
+                
                 { label: 'Change Password', icon: 'pi pi-key', routerLink: ['/app/pages/changepassword'] },
                 { label: 'Reports', 
                     items:[{ label: 'Statement of Accounts', icon: 'pi pi-file', routerLink: ['/'] },
@@ -93,7 +93,7 @@ export class AppMenu {
                 { label: 'Manage Invoice Details', icon: 'pi pi-receipt', routerLink: ['/app/pages/manageinvoices'] },
                 
                 
-                { label: 'Manage Circulars', icon: 'pi pi-circle', routerLink: ['/'] },
+                
                 { label: 'Change Password', icon: 'pi pi-key', routerLink: ['/app/pages/changepassword'] },
                 { label: 'Reports', 
                     items:[{ label: 'Statement of Accounts', icon: 'pi pi-file', routerLink: ['/'] },
