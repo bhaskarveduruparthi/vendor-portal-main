@@ -59,7 +59,10 @@ interface ExportColumn {
     template: `
         <p-toolbar styleClass="mb-6">
             <ng-template #start>
-               
+                <p-iconfield>
+                        <p-inputicon styleClass="pi pi-search" />
+                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
+                    </p-iconfield>
             </ng-template>
 
             <ng-template #end>
@@ -86,10 +89,7 @@ interface ExportColumn {
                 <div class="flex items-center justify-between">
                     <h5 class="m-0">Manage Scheduling Agreement /PO</h5>
                      
-                    <p-iconfield>
-                        <p-inputicon styleClass="pi pi-search" />
-                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
-                    </p-iconfield>
+                   
                 </div>
             </ng-template>
             <ng-template #header>
@@ -189,7 +189,7 @@ export class ManagePOs implements OnInit {
     }
 
     loadDemoData() {
-        this.productService.getProducts().then((data) => {
+        this.productService.getPOS().subscribe((data:any) => {
             this.products.set(data);
         });
 

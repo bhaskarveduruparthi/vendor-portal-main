@@ -56,7 +56,7 @@ interface Item {
 }
 `
     ],
-    template: ` <app-floating-configurator />
+    template: ` 
     
     
    <div class="container">

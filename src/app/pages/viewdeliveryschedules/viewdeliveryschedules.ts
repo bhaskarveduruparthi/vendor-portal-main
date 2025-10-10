@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { AppFloatingConfigurator } from '../../layout/component/app.floatingconfigurator';
 import { TextareaModule } from 'primeng/textarea';
+import { ManageDeliverySchedulesService } from '../service/managedeliveryschedules.service';
+import { ActivatedRoute } from '@angular/router';
 
-interface Item {
-  
-  materialDescription: string;
+interface DeliveryItem {
   materialCode: string;
+  materialDescription: string;
   unit: string;
-  
+  reason?: string;
 }
 
 @Component({
@@ -51,7 +52,7 @@ interface Item {
 }
 `
     ],
-    template: ` <app-floating-configurator />
+    template: ` 
     
     
    <div class="container">
@@ -119,36 +120,54 @@ interface Item {
 
 
 
-export class ViewDeliverySchedules {
-
-    headerInfo = {
+export class ViewDeliverySchedules implements OnInit {
   
-  deliveryschedule_no: '',
-  deliveryschedule_date: '',
-  purchaseorder_no:'',
-  purchaseorder_date: '',
-  supplierName: 'KRISHNA INDUSTRIES',
-  supplierCode: '100017',
- 
-};
-  // TABLE DATA
-  items: Item[] = [
-   
- 
-  { materialCode: '10300000000000', materialDescription: 'SEAT SPRING MMC,HP,TURBO,SHAKTI', unit: 'NO' },
-  { materialCode: '11000000000000', materialDescription: 'CAP DAMPER MMC,HP,TURBO,SKATI', unit: 'NO' },
-  { materialCode: '11000000000000', materialDescription: 'SEAT SPRING UNDER KRP F/C', unit: 'NO' },
-  { materialCode: '11000000000000', materialDescription: 'PLATE END PLT. KHCR,P11,SLKCR,P17-R', unit: 'NO' },
-  { materialCode: '11000000000000', materialDescription: 'SEAT SPRING,P11,P-17K,KEMA-R KRPF R/C', unit: 'NO' },
-  { materialCode: '10100000000000', materialDescription: 'SPRING ADJUSTER PLATED (P-40 REAR)ND.', unit: 'NO' },
-  { materialCode: '10100000000000', materialDescription: 'SPRING ADJUSTER PLATED (P21 REAR)', unit: 'NO' },
-  { materialCode: '10100000000000', materialDescription: 'SPRING ADJUSTER PLATED H.S.REAR', unit: 'NO' },
-  { materialCode: '10100000000000', materialDescription: 'SPRING STOPPER KSP REAR', unit: 'NO' },
-  { materialCode: '10100000000000', materialDescription: 'COLLER SPRING HHFF 19801', unit: 'NO' },
-  { materialCode: '10100000000000', materialDescription: 'SPRING ADJUSTER P30.DPLX.NI.C.R.PL.', unit: 'NO' }
+  items: DeliveryItem[] = [];
+   headerInfo = {
+    deliveryschedule_no: '',
+    deliveryschedule_date: '',
+    purchaseorder_no: '',
+    purchaseorder_date: '',
+    supplierCode: '',
+    supplierName: ''
+  };
 
+    constructor(
+       public managedeliveryservice: ManageDeliverySchedulesService, private route: ActivatedRoute
+    ) {}
 
-  ];
+   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      const ebeln = params['ebeln'];
+      if (ebeln) {
+        this.managedeliveryservice.getDeliveryScheduleDetails(ebeln).subscribe({
+          next: (response: any) => {
+            const sched = (response.ZSCHED_DET?.[0]) || {};
+            this.headerInfo = {
+              deliveryschedule_no: sched.ETENR || '',
+              deliveryschedule_date: sched.BEDAT || '',
+              purchaseorder_no: sched.EBELN || '',
+              purchaseorder_date: sched.BEDAT || '',
+              supplierCode: sched.LIFNR || '',
+              supplierName: sched.NAME1 || ''
+            };
+            this.items = (response.ZPO_DET || []).map((row: any): DeliveryItem => ({
+              materialCode: row.MATNR,
+              materialDescription: row.MAKTX,
+              unit: row.MEINS,
+              reason: '' // Or map reason if present in data
+            }));
+          },
+          error: () => {
+            console.log("Error Found");
+          }
+        });
+      }
+    });
+  }
+    
+
+    
 
 
 

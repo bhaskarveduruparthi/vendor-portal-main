@@ -59,7 +59,10 @@ interface ExportColumn {
     template: `
         <p-toolbar styleClass="mb-6">
             <ng-template #start>
-               
+               <p-iconfield>
+                        <p-inputicon styleClass="pi pi-search" />
+                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search Supplier Data" />
+                    </p-iconfield>
             </ng-template>
 
             <ng-template #end>
@@ -86,17 +89,12 @@ interface ExportColumn {
                 <div class="flex items-center justify-between">
                     <h5 class="m-0">Manage Suppliers</h5>
                      
-                    <p-iconfield>
-                        <p-inputicon styleClass="pi pi-search" />
-                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search Supplier Data" />
-                    </p-iconfield>
+                    
                 </div>
             </ng-template>
             <ng-template #header>
                 <tr>
-                    <th style="width: 3rem">
-                        <p-tableHeaderCheckbox />
-                    </th>
+                    
                     
                     <th pSortableColumn="suppliercode" style="min-width:16rem">
                         Supplier Code
@@ -139,9 +137,7 @@ interface ExportColumn {
             <ng-template #body let-supplier>
                 <tr>
                     
-                     <td style="width: 3rem">
-                        <p-tableCheckbox [value]="supplier" />
-                    </td>
+                    
                     <td style="min-width: 12rem">{{ supplier.suppliercode }}</td>
                     <td style="min-width: 16rem">{{ supplier.suppliername }}</td>
                     <td style="min-width: 16rem">{{ supplier.city }}</td>

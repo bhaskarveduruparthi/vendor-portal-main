@@ -85,15 +85,15 @@ interface ExportColumn {
             
                   
 
-<div class="form-group">
-  <label for="suppliername">Supplier Name</label>
-  <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search" />
-</div>
 
-<div class="form-group">
-  <label for="suppliername">Delivery Type</label>
-  <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search" />
-</div>
+
+  <p-iconfield>
+                        <p-inputicon styleClass="pi pi-search" />
+                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
+                    </p-iconfield>
+
+
+
 
 
 
@@ -104,7 +104,7 @@ interface ExportColumn {
             </ng-template>
 
             <ng-template #end>
-                
+               <p-button label="Export to Excel" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" /> 
             </ng-template>
         </p-toolbar>
 
@@ -112,8 +112,9 @@ interface ExportColumn {
     #dt
     [value]="deliveryschedules()"
     [rows]="10"
+    [columns]="cols"
     [paginator]="true"
-    [globalFilterFields]="['supplier_name']"
+    [globalFilterFields]="['supplier_name', 'purchase_order_no']"
     [tableStyle]="{ 'min-width': '75rem' }"
     [(selection)]="selecteddeliveryschedules"
     [rowHover]="true"
@@ -125,7 +126,8 @@ interface ExportColumn {
     <ng-template #caption>
         <div class="flex items-center justify-between">
             <h5 class="m-0">Manage Delivery Schedules</h5>
-            <p-button label="Export to Excel" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
+            
+            
         </div>
     </ng-template>
     <ng-template #header>
@@ -157,21 +159,12 @@ interface ExportColumn {
                 Created By
                 <p-sortIcon field="created_by" />
             </th>
-            <th style="min-width: 12rem">
-                Update Delivery Schedule
-            </th>
+            
             <th pSortableColumn="created_date" style="min-width: 12rem">
                 Created Date
                 <p-sortIcon field="created_date" />
             </th>
-            <th pSortableColumn="last_updated_date" style="min-width: 12rem">
-                Last Updated Date
-                <p-sortIcon field="last_updated_date" />
-            </th>
-            <th pSortableColumn="last_updated_by" style="min-width: 12rem">
-                Last Updated By
-                <p-sortIcon field="last_updated_by" />
-            </th>
+            
         </tr>
     </ng-template>
     <ng-template #body let-deliveryschedule>
@@ -182,16 +175,13 @@ interface ExportColumn {
             <td style="min-width: 16rem">{{ deliveryschedule.delivery_schedule_no }}</td>
             <td style="min-width: 16rem">{{ deliveryschedule.delivery_schedule_date }}</td>
             <td>
-                <p-button label="View" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="gotoView()" />
+                <p-button label="View" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="gotoView(deliveryschedule.purchase_order_no)" />
                 
             </td>
             <td style="min-width: 16rem">{{ deliveryschedule.created_by }}</td>
-            <td>
-                <p-button label="Update" [rounded]="true" [outlined]="true" />
-            </td>
+            
             <td style="min-width: 16rem">{{ deliveryschedule.created_date }}</td>
-            <td style="min-width: 16rem">{{ deliveryschedule.last_updated_date }}</td>
-            <td style="min-width: 16rem">{{ deliveryschedule.last_updated_by }}</td>
+            
         </tr>
     </ng-template>
 </p-table>
@@ -214,7 +204,7 @@ export class ManageDeliveryschedules implements OnInit {
 
     submitted: boolean = false;
 
-    
+    ebeln!:string
 
     @ViewChild('dt') dt!: Table;
 
@@ -238,9 +228,13 @@ export class ManageDeliveryschedules implements OnInit {
     }
 
     loadData() {
-       this.managedeliveryservice.getDeliveryschedules().subscribe((data:any) => {
-            this.deliveryschedules.set(data);
-        });
+    this.managedeliveryservice.getDeliveryschedules().subscribe((data: any) => {
+        
+        this.deliveryschedules.set(data);
+        
+    });
+
+
 
         
 
@@ -252,8 +246,7 @@ export class ManageDeliveryschedules implements OnInit {
     { field: 'delivery_schedule_date', header: 'Delivery Schedule Date' },
     { field: 'created_by', header: 'Created By' },
     { field: 'created_date', header: 'Created Date' },
-    { field: 'last_updated_date', header: 'Last Update Date' },
-    { field: 'last_updated_by', header: 'Last Update By' }
+    
 ];
 
         this.exportColumns = this.cols.map((col) => ({ title: col.header, dataKey: col.field }));
@@ -263,8 +256,13 @@ export class ManageDeliveryschedules implements OnInit {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
 
-    gotoView(){
-        this.router.navigate(['/app/pages/viewmanagedeliveryschedules'])    }    
+    gotoView(I_EBELN:string){
+        this.ebeln = I_EBELN
+        console.log(this.ebeln);
+        this.router.navigate(['/app/pages/viewmanagedeliveryschedules'], { queryParams: { ebeln: this.ebeln } });
+            
+       
+            }    
 
     
 

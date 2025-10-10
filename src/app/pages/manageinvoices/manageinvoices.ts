@@ -82,29 +82,15 @@ interface ExportColumn {
         <p-toolbar styleClass="mb-6">
             <ng-template #start>
             
-                  <div class="form-group">
-  <label for="suppliercode">Supplier Code</label>
- <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search" />
-</div>
-
-<div class="form-group">
-  <label for="suppliername">Supplier Name</label>
-  <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search" />
-</div>
-
-
-
-
-
-<div class="form-group">
-  <label for="invoice_no">Invoice No</label>
-  <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search" />
-</div>
+                  <p-iconfield>
+                        <p-inputicon styleClass="pi pi-search" />
+                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
+                    </p-iconfield>
 
             </ng-template>
 
             <ng-template #end>
-                
+               <p-button label="Export to Excel" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" /> 
             </ng-template>
         </p-toolbar>
 
@@ -126,7 +112,7 @@ interface ExportColumn {
     <ng-template #caption>
         <div class="flex items-center justify-between">
             <h5 class="m-0">Manage Invoice Details</h5>
-            <p-button label="Export to Excel" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
+            
         </div>
     </ng-template>
     <ng-template #header>
@@ -155,12 +141,8 @@ interface ExportColumn {
             <th style="min-width: 12rem">
                 Invoice Details
             </th>
-            <th style="min-width: 12rem">
-                Bin/Truck Information
-            </th>
-            <th style="min-width: 12rem">
-                Actions
-            </th>
+            
+            
         </tr>
     </ng-template>
     <ng-template #body let-invoice>
@@ -172,15 +154,10 @@ interface ExportColumn {
             <td style="min-width: 16rem">{{ invoice.invoice_no }}</td>
             <td style="min-width: 16rem">{{ invoice.invoice_date }}</td>
             <td>
-                <p-button label="View" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="gotoView()" />
-                <p-button label="Print" [rounded]="true" [outlined]="true" />
+                <p-button label="View" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="gotoView(invoice.purchase_order_no)" />
+                
             </td>
-            <td>
-                <p-button label="Update" [rounded]="true" [outlined]="true" />
-            </td>
-            <td>
-                <p-button label="Delete" [rounded]="true" [outlined]="true" />
-            </td>
+           
         </tr>
     </ng-template>
 </p-table>
@@ -210,6 +187,7 @@ export class ManageInvoices implements OnInit {
     exportColumns!: ExportColumn[];
 
     cols!: Column[];
+    ebeln!: string;
 
     constructor(
         private manageinvoiceservice: ManageInvoicesService,
@@ -228,7 +206,9 @@ export class ManageInvoices implements OnInit {
 
     loadData() {
        this.manageinvoiceservice.getInvoices().subscribe((data:any) => {
-            this.invoices.set(data);
+          
+        this.invoices.set(data);
+        
         });
 
         
@@ -248,8 +228,14 @@ export class ManageInvoices implements OnInit {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
 
-    gotoView(){
-        this.router.navigate(['/app/pages/viewmanagepos'])    }    
+    gotoView(I_EBELN:string){
+        this.ebeln = I_EBELN
+        console.log(this.ebeln);
+        this.router.navigate(['/app/pages/viewmanagedeliveryschedules'], { queryParams: { ebeln: this.ebeln } });
+            
+       
+            }    
+  
 
     
 

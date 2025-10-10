@@ -60,7 +60,10 @@ interface ExportColumn {
     template: `
         <p-toolbar styleClass="mb-6">
             <ng-template #start>
-               <p-button label="Add Admin"  icon="pi pi-add" severity="secondary"  />
+              <p-iconfield>
+                        <p-inputicon styleClass="pi pi-search" />
+                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
+                    </p-iconfield>
             </ng-template>
 
             <ng-template #end>
@@ -87,17 +90,12 @@ interface ExportColumn {
                 <div class="flex items-center justify-between">
                     <h5 class="m-0">Manage Admins</h5>
                      
-                    <p-iconfield>
-                        <p-inputicon styleClass="pi pi-search" />
-                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
-                    </p-iconfield>
+                    
                 </div>
             </ng-template>
             <ng-template #header>
                 <tr>
-                    <th style="width: 3rem">
-                        <p-tableHeaderCheckbox />
-                    </th>
+                    
                     
                     <th pSortableColumn="firstname" style="min-width:16rem">
                         Firstname
@@ -116,18 +114,14 @@ interface ExportColumn {
                         Email Id
                         <p-sortIcon field="email" />
                     </th>
-                    <th    style="min-width: 12rem">
-                        Actions
-                    </th>
+                    
                     
                 </tr>
             </ng-template>
             <ng-template #body let-admin>
                 <tr>
                     
-                     <td style="width: 3rem">
-                        <p-tableCheckbox [value]="admin" />
-                    </td>
+                     
                     <td style="min-width: 12rem">{{ admin.firstname }}</td>
                     <td style="min-width: 16rem">{{ admin.lastname }}</td>
                     <td style="min-width: 16rem">{{ admin.loginid }}</td>
@@ -135,10 +129,7 @@ interface ExportColumn {
                    
                    
                     
-                    <td>
-                        <p-button label="Edit" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="gotoView()" />
-                        <p-button  label="Disable" [rounded]="true" [outlined]="true"  />
-                    </td>
+                    
                 </tr>
             </ng-template>
         </p-table>

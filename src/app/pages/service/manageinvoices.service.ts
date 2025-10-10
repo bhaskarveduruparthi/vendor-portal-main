@@ -28,12 +28,9 @@ export class ManageInvoicesService {
   }
 
     getInvoices() {
-     
-    
     
     return this.http.get(`${this.url}sapdata/manageinvoicedetails`);
-    
-    }
+}
 
     
 }

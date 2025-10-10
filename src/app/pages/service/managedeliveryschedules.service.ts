@@ -31,11 +31,17 @@ export class ManageDeliverySchedulesService {
     this.url = `${this._url.getApiUrl()}`
   }
 
-    getDeliveryschedules() {
+  getDeliveryschedules() {
     
-    
+
     return this.http.get(`${this.url}sapdata/managedeliveryschedules`);
-    }
+  }
+
+  getDeliveryScheduleDetails(I_EBELN: string) {
+  const payload = { I_EBELN: I_EBELN };
+  return this.http.post(`${this.url}sap/getpo_deliveryscheduledetails`, payload);
+  }
+
 
     
 }
