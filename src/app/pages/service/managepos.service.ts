@@ -21,23 +21,45 @@ export class ManagePOsService {
     getProductsData() {
        return [
         {
-        id: 'P1001',
-        plantcode: 'PLT001',
-        pono: 'PO12345',
-        podate: '2025-07-28'
-    },
-    {
-        id: 'P1002',
-        plantcode: 'PLT002',
-        pono: 'PO12346',
-        podate: '2025-07-30'
-    },
-    {
-        id: 'P1003',
-        plantcode: 'PLT003',
-        pono: 'PO12347',
-        podate: '2025-08-04'
-    }
+    suppliername: "Domestic US Supplier 1",
+    suppliercode: "1",
+    email: "chandrasekhar.s@yash.com",
+    plantcode: "1710",
+    pono: "4500000100",
+    podate: "19.04.2024"
+  },
+  {
+    suppliername: "mjr companyc code",
+    suppliercode: "456",
+    email: "chandrasekhar.s@yash.com",
+    plantcode: "1710",
+    pono: "4500000667",
+    podate: "04.09.2024"
+  },
+  {
+    suppliername: "ABHINAV ENTERPRISES (TEST)",
+    suppliercode: "51",
+    email: "ABCD@GMAIL.COM",
+    plantcode: "1710",
+    pono: "4500000633",
+    podate: "05.08.2024"
+  },
+  {
+    suppliername: "Toyota Vendor Group",
+    suppliercode: "321",
+    email: "chandrasekhar.s@yash.com",
+    plantcode: "1710",
+    pono: "4500000942",
+    podate: "04.02.2025"
+  },
+  {
+    suppliername: "PAR1",
+    suppliercode: "729",
+    email: "pragati.pusdekar@yash.com",
+    plantcode: "1710",
+    pono: "4500000876",
+    podate: "14.12.2024"
+  }
        ];
     }
 
