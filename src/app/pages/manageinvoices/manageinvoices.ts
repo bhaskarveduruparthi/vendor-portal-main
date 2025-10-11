@@ -231,7 +231,7 @@ export class ManageInvoices implements OnInit {
     gotoView(I_EBELN:string){
         this.ebeln = I_EBELN
         console.log(this.ebeln);
-        this.router.navigate(['/app/pages/viewmanagedeliveryschedules'], { queryParams: { ebeln: this.ebeln } });
+        this.router.navigate(['/app/pages/viewinvoicedetails'], { queryParams: { ebeln: this.ebeln } });
             
        
             }    

@@ -15,15 +15,15 @@ interface DeliveryItem {
 }
 
 @Component({
-    selector: 'app-viewdeliveryschedules',
+    selector: 'app-viewinvoicedetails',
     standalone: true,
-    imports: [RouterModule,TextareaModule, ButtonModule,PanelModule, TableModule],
+    imports: [RouterModule, TextareaModule, ButtonModule,PanelModule, TableModule],
     styles:[`
       .po-container {
   
   
   padding: 18px;
-  max-width: auto;
+  max-width: 950px;
   margin: 24px auto;
   
   font-family: Arial, sans-serif;
@@ -54,17 +54,39 @@ interface DeliveryItem {
     template: ` 
     
     
-  
+   
       <p-panel>
         <div class="po-container">
       <div class="po-header-grid">
-        <div><label>Delivery Schedule No:</label> <span>{{headerInfo.deliveryschedule_no}}</span></div>
-        <div><label>Delivery Schedule Date:</label> <span>{{headerInfo.deliveryschedule_date}}</span></div>
-        <div><label>Purchase Order No:</label> <span>{{headerInfo.purchaseorder_no}}</span></div>
-        <div><label>Purchase Order Date:</label> <span>{{headerInfo.purchaseorder_date}}</span></div>
-        <div><label>Supplier Code:</label> <span>{{headerInfo.supplierCode}}</span></div>
-        <div><label>Supplier Name:</label> <span>{{headerInfo.supplierName}}</span></div>
+        <div><label>Invoice Number:</label> <span> {{headerInfo.deliveryschedule_no}}</span></div>
+        <div><label>Invoice Date:</label> <span> {{headerInfo.deliveryschedule_date}}</span></div>
+        <div><label>Consignee Name:</label> <span> {{headerInfo.purchaseorder_no}}</span></div>
+        <div><label>Transporter Name:</label> <span>{{headerInfo.purchaseorder_date}}</span></div>
+        <div><label>Mode of Transport:</label> <span>{{headerInfo.supplierCode}}</span></div>
+        <div><label>Vehicle No:</label> <span>{{headerInfo.supplierName}}</span></div>
         
+
+      </div>
+        
+        
+        </div>
+      </p-panel>
+    <br>
+       <p-panel>
+        <div class="po-container">
+      <div class="po-header-grid">
+        <div><label>PO No:</label> <span> {{headerInfo.deliveryschedule_no}}</span></div>
+        <div><label>PO Date:</label> <span> {{headerInfo.deliveryschedule_date}}</span></div>
+        <div><label>TIN No:</label> <span> {{headerInfo.purchaseorder_no}}</span></div>
+        <div><label>ECC No:</label> <span>{{headerInfo.purchaseorder_date}}</span></div>
+        <div><label>PAN No:</label> <span>{{headerInfo.supplierCode}}</span></div>
+        <div><label>Supplier Contact Person:</label> <span>{{headerInfo.supplierName}}</span></div>
+        <div><label>Valid From:</label> <span> {{headerInfo.deliveryschedule_no}}</span></div>
+        <div><label>Valid To:</label> <span> {{headerInfo.deliveryschedule_date}}</span></div>
+        <div><label>Service Tax No:</label> <span> {{headerInfo.purchaseorder_no}}</span></div>
+        <div><label>Supplier Code:</label> <span>{{headerInfo.purchaseorder_date}}</span></div>
+        <div><label>Supplier Address:</label> <span>{{headerInfo.supplierCode}}</span></div>
+        <div><label>Plant Code:</label> <span>{{headerInfo.supplierName}}</span></div>
 
       </div>
         
@@ -88,21 +110,47 @@ interface DeliveryItem {
    
   
 
-  <p-table #dt [value]="items" dataKey="id" [rowHover]="true" [tableStyle]="{ 'min-width': '75rem' }" >
-    <ng-template #header>
+  <p-table #dt [value]="items"  [tableStyle]="{ 'min-width': '75rem' }" >
+    <ng-template pTemplate="header">
       <tr>
-         <th>Material Code</th>
         <th>Material Description</th>
-        <th>Unit</th>
-        <th>Reason</th>
+        <th>Material Code</th>
+        <th>No of Pkts</th>
+        <th>Quantity</th>
+        <th>Price Per Unit</th>
+        <th>Gross Value</th>
+        <th>Cenvat or Service Tax(%)</th>
+        <th>Cenvat or Service Tax</th>
+        <th>Edcs(%)</th>
+        <th>Edcs</th>
+        <th>SHECess(%)</th>
+        <th>SHECess</th>
+        <th>Taxable</th>
+        <th>VAT/CST(%)</th>
+        <th>VAT/CST Amount</th>
+        <th>Packaging</th>
       </tr>
     </ng-template>
-    <ng-template #body let-row>
+    <ng-template pTemplate="body" let-row>
       <tr>
-        <td>{{row.materialCode}}</td>
-         <td>{{row.materialDescription}}</td>
-        <td>{{row.unit}}</td>
-        <td>{{row.reason}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        
+
       </tr>
     </ng-template>
   </p-table>
@@ -119,7 +167,7 @@ interface DeliveryItem {
 
 
 
-export class ViewDeliverySchedules implements OnInit {
+export class ViewInvoiceDetails implements OnInit {
   
   items: DeliveryItem[] = [];
    headerInfo = {

@@ -59,7 +59,7 @@ interface Item {
     template: ` 
     
     
-   <div class="container">
+   
       <p-panel>
         <div class="po-container">
       <div class="po-header-grid">
@@ -136,7 +136,7 @@ interface Item {
   <div class="button-row">
     <button pButton type="button" label="Back" class="p-button-sm p-button-danger" (click)="onBack()"></button>
   </div>
-</div>
+
 
 
        `
