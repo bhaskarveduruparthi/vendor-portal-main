@@ -18,8 +18,10 @@ import { DialogModule } from 'primeng/dialog';
 import { TagModule } from 'primeng/tag';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
+import { PanelModule } from 'primeng/panel';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Supplier, ManageSuppliersService } from '../service/managesuppliers.service';
+import { AuthenticationService } from '../service/authentication.service';
 
 interface Column {
     field: string;
@@ -47,6 +49,7 @@ interface ExportColumn {
         RatingModule,
         InputTextModule,
         TextareaModule,
+        PanelModule,
         SelectModule,
         RadioButtonModule,
         InputNumberModule,
@@ -57,7 +60,8 @@ interface ExportColumn {
         ConfirmDialogModule
     ],
     template: `
-        <p-toolbar styleClass="mb-6">
+        <p-panel>
+            <p-toolbar styleClass="mb-6">
             <ng-template #start>
                <p-iconfield>
                         <p-inputicon styleClass="pi pi-search" />
@@ -154,6 +158,8 @@ interface ExportColumn {
                 </tr>
             </ng-template>
         </p-table>
+        </p-panel>
+        
 
        
 
@@ -179,13 +185,33 @@ export class ManageSuppliers implements OnInit {
     exportColumns!: ExportColumn[];
 
     cols!: Column[];
+    isvalid: boolean = false;
 
     constructor(
         private managesupplierservice: ManageSuppliersService,
         private messageService: MessageService,
+        private authservice: AuthenticationService,
         private confirmationService: ConfirmationService,
         public router: Router
-    ) {}
+    ) {
+        this.authservice.user.subscribe((x)=>{
+      if(x?.loginid =='SuperAdmin'){
+        this.isvalid = true
+      }
+      else if(x?.loginid =='Admin'){
+        this.isvalid = true
+      }
+      else{
+        this.router.navigate(['/auth/access']);
+      }
+      
+      
+      
+    })
+    
+    }
+
+    
 
     exportCSV() {
         this.dt.exportCSV();
@@ -196,7 +222,7 @@ export class ManageSuppliers implements OnInit {
     }
 
     loadDemoData() {
-       this.managesupplierservice.getSuppliers().then((data) => {
+       this.managesupplierservice.getSuppliers().subscribe((data:any) => {
             this.suppliers.set(data);
         });
 

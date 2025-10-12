@@ -19,12 +19,23 @@ import { TagModule } from 'primeng/tag';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { PanelModule } from 'primeng/panel';
 import { Product, ManagePOsService } from '../service/managepos.service';
 
 interface Column {
     field: string;
     header: string;
     customExportHeader?: string;
+}
+
+interface RawDeliverySchedule {
+  LIFNR: string;      // supplier code
+  NAME1: string;      // supplier name
+  EBELN: string;      // purchase order number
+  BEDAT: string;      // purchase order date
+  WERKS: string;      // plant code
+  SMTP_ADDR: string;  // email address
+ 
 }
 
 interface ExportColumn {
@@ -52,12 +63,14 @@ interface ExportColumn {
         InputNumberModule,
         DialogModule,
         TagModule,
+        PanelModule,
         InputIconModule,
         IconFieldModule,
         ConfirmDialogModule
     ],
     template: `
-        <p-toolbar styleClass="mb-6">
+        <p-panel>
+            <p-toolbar styleClass="mb-6">
             <ng-template #start>
                 <p-iconfield>
                         <p-inputicon styleClass="pi pi-search" />
@@ -76,12 +89,13 @@ interface ExportColumn {
             [rows]="10"
             [columns]="cols"
             [paginator]="true"
-            [globalFilterFields]="['plantcode', 'pono', 'podate']"
+            [loading]="loading"
+            [globalFilterFields]="['suppliercode','plantcode', 'pono', 'podate']"
             [tableStyle]="{ 'min-width': '75rem' }"
             [(selection)]="selectedProducts"
             [rowHover]="true"
             dataKey="id"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
             [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[10, 20, 30]"
         >
@@ -95,30 +109,30 @@ interface ExportColumn {
             <ng-template #header>
                 <tr>
                     
-                    <th pSortableColumn="plantcode" style="min-width:16rem">
+                    <th  style="min-width:16rem">
                         Supplier Code
-                        <p-sortIcon field="name" />
+                        
                     </th>
-                    <th pSortableColumn="plantcode" style="min-width:16rem">
+                    <th  style="min-width:16rem">
                         Supplier Name
-                        <p-sortIcon field="name" />
+                       
                     </th>
-                    <th pSortableColumn="plantcode" style="min-width:16rem">
+                    <th  style="min-width:16rem">
                         Email Id
-                        <p-sortIcon field="name" />
+                        
                     </th>
-                    <th pSortableColumn="plantcode" style="min-width:16rem">
+                    <th  style="min-width:16rem">
                         Plant Code
-                        <p-sortIcon field="name" />
+                        
                     </th>
                     
-                    <th pSortableColumn="pono" style="min-width: 8rem">
+                    <th  style="min-width: 8rem">
                         PO No
-                        <p-sortIcon field="price" />
+                        
                     </th>
-                    <th pSortableColumn="podate" style="min-width:10rem">
+                    <th  style="min-width:10rem">
                         PO Date
-                        <p-sortIcon field="category" />
+                        
                     </th>
                     <th  style="min-width: 12rem">
                         View PO Details
@@ -141,12 +155,14 @@ interface ExportColumn {
                    
                     
                     <td>
-                        <p-button label="View" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="gotoView()" />
-                        <p-button  label="Print" [rounded]="true" [outlined]="true"  />
+                        <p-button label="View" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="gotoView(product.pono)" />
+                        
                     </td>
                 </tr>
             </ng-template>
         </p-table>
+        </p-panel>
+        
 
        
 
@@ -167,11 +183,14 @@ export class ManagePOs implements OnInit {
 
     statuses!: any[];
 
+    loading: boolean = true;
+
     @ViewChild('dt') dt!: Table;
 
     exportColumns!: ExportColumn[];
 
     cols!: Column[];
+    ebeln!: string;
 
     constructor(
         private productService: ManagePOsService,
@@ -185,13 +204,36 @@ export class ManagePOs implements OnInit {
     }
 
     ngOnInit() {
-        this.loadDemoData();
+        this.loadData();
     }
 
-    loadDemoData() {
-        this.productService.getPOS().subscribe((data:any) => {
-            this.products.set(data);
-        });
+    loadData() {
+  this.productService.getPOS().subscribe(
+    (response: any) => {
+      // Parse and map ET_MANAGE_DELIVERY schedules (existing)
+      const rawSchedules: RawDeliverySchedule[] = response.ET_SUPPLIERPOS || [];
+      const mappedSchedules: Product[] = rawSchedules.map((item: RawDeliverySchedule) => ({
+        suppliername: item.NAME1,
+        suppliercode: item.LIFNR,
+        email: item.SMTP_ADDR,
+        plantcode: item.WERKS,
+        pono: item.EBELN,
+        podate: item.BEDAT
+      }));
+      console.log('Mapped Delivery Schedules:', mappedSchedules);
+      this.products.set(mappedSchedules);
+
+      
+
+      this.loading = false;
+    },
+    (error) => {
+      console.error('Error loading delivery schedules and supplier data', error);
+      this.loading = false;
+    }
+  );
+
+
 
         
 
@@ -212,8 +254,13 @@ export class ManagePOs implements OnInit {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
 
-    gotoView(){
-        this.router.navigate(['/app/pages/viewmanagepos'])    }    
+    gotoView(I_EBELN:string){
+        this.ebeln = I_EBELN
+        console.log(this.ebeln);
+        this.router.navigate(['/app/pages/viewmanagepos'], { queryParams: { ebeln: this.ebeln } });
+            
+       
+            }        
 
     
 

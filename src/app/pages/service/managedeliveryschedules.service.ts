@@ -32,15 +32,23 @@ export class ManageDeliverySchedulesService {
   }
 
   getDeliveryschedules() {
-    
-
-    return this.http.get(`${this.url}sapdata/managedeliveryschedules`);
+  const I_DATE = '20240201';
+  const payload = { I_DATE: I_DATE };
+  return this.http.post(`${this.url}sap/get_delivery_schedule`, payload);
   }
+
 
   getDeliveryScheduleDetails(I_EBELN: string) {
   const payload = { I_EBELN: I_EBELN };
   return this.http.post(`${this.url}sap/getpo_deliveryscheduledetails`, payload);
   }
+
+  getInvoiceDetails(I_EBELN: string) {
+  const payload = { I_EBELN: I_EBELN };
+  return this.http.post(`${this.url}sap/viewinvoicedetails`, payload);
+  }
+
+
 
 
     

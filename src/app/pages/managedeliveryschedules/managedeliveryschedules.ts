@@ -29,6 +29,15 @@ interface Column {
     customExportHeader?: string;
 }
 
+interface RawDeliverySchedule {
+  NAME1: string;
+  EBELN: string;
+  AEDAT: string;
+  ETENR: string;
+  EINDT: string;
+  // Add other fields if needed
+}
+
 interface ExportColumn {
     title: string;
     dataKey: string;
@@ -78,9 +87,8 @@ interface ExportColumn {
 }
     `,
     template: `
-       
-       
-        <p-toolbar styleClass="mb-6">
+        <p-panel>
+            <p-toolbar styleClass="mb-6">
             <ng-template #start>
             
                   
@@ -114,6 +122,7 @@ interface ExportColumn {
     [rows]="10"
     [columns]="cols"
     [paginator]="true"
+    [loading]="loading"
     [globalFilterFields]="['supplier_name', 'purchase_order_no']"
     [tableStyle]="{ 'min-width': '75rem' }"
     [(selection)]="selecteddeliveryschedules"
@@ -132,38 +141,30 @@ interface ExportColumn {
     </ng-template>
     <ng-template #header>
         <tr>
-            <th pSortableColumn="supplier_name" style="min-width: 8rem">
+            <th  style="min-width: 8rem">
                 Supplier Name
-                <p-sortIcon field="supplier_name" />
+                
             </th>
-            <th pSortableColumn="purchase_order_no" style="min-width:10rem">
+            <th  style="min-width:10rem">
                 Purchase Order No
-                <p-sortIcon field="purchase_order_no" />
+                
             </th>
-            <th pSortableColumn="purchase_order_date" style="min-width: 12rem">
+            <th  style="min-width: 12rem">
                 Purchase Order Date
-                <p-sortIcon field="purchase_order_date" />
+                
             </th>
-            <th pSortableColumn="delivery_schedule_no" style="min-width: 12rem">
+            <th  style="min-width: 12rem">
                 Delivery Schedule No
-                <p-sortIcon field="delivery_schedule_no" />
+                
             </th>
-            <th pSortableColumn="delivery_schedule_date" style="min-width: 12rem">
+            <th  style="min-width: 12rem">
                 Delivery Schedule Date
-                <p-sortIcon field="delivery_schedule_date" />
+               
             </th>
             <th style="min-width: 12rem">
                 Delivery Schedule
             </th>
-            <th pSortableColumn="created_by" style="min-width: 12rem">
-                Created By
-                <p-sortIcon field="created_by" />
-            </th>
             
-            <th pSortableColumn="created_date" style="min-width: 12rem">
-                Created Date
-                <p-sortIcon field="created_date" />
-            </th>
             
         </tr>
     </ng-template>
@@ -178,13 +179,14 @@ interface ExportColumn {
                 <p-button label="View" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="gotoView(deliveryschedule.purchase_order_no)" />
                 
             </td>
-            <td style="min-width: 16rem">{{ deliveryschedule.created_by }}</td>
-            
-            <td style="min-width: 16rem">{{ deliveryschedule.created_date }}</td>
             
         </tr>
     </ng-template>
-</p-table>
+        </p-table>
+
+        </p-panel>
+       
+        
 
 
        
@@ -210,6 +212,8 @@ export class ManageDeliveryschedules implements OnInit {
 
     exportColumns!: ExportColumn[];
 
+    loading: boolean = true;
+
     cols!: Column[];
 
     constructor(
@@ -228,11 +232,34 @@ export class ManageDeliveryschedules implements OnInit {
     }
 
     loadData() {
-    this.managedeliveryservice.getDeliveryschedules().subscribe((data: any) => {
-        
-        this.deliveryschedules.set(data);
-        
-    });
+ 
+  this.managedeliveryservice.getDeliveryschedules().subscribe(
+    (response: any) => {
+      const rawSchedules: RawDeliverySchedule[] = response.ET_MANAGE_DELIVERY || [];
+      const mappedSchedules: Deliveryschedule[] = rawSchedules.map((item: RawDeliverySchedule) => ({
+        supplier_name: item.NAME1,
+        purchase_order_no: item.EBELN,
+        purchase_order_date: item.AEDAT,
+        delivery_schedule_no: Number(item.ETENR),
+        delivery_schedule_date: item.EINDT
+      }));
+
+      console.log('Mapped Delivery Schedules:', mappedSchedules);
+      this.deliveryschedules.set(mappedSchedules);
+      this.loading = false;
+    },
+    (error) => {
+      console.error('Error loading delivery schedules', error);
+      this.loading = false;
+    }
+  );
+
+
+
+
+
+
+
 
 
 

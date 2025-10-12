@@ -38,8 +38,8 @@ export class AppMenu {
                 
                 { label: 'Change Password', icon: 'pi pi-key', routerLink: ['/app/pages/changepassword'] },
                 { label: 'Reports', 
-                    items:[{ label: 'Statement of Accounts', icon: 'pi pi-file', routerLink: ['/'] },
-                          { label: 'Payment Advice', icon: 'pi pi-file', routerLink: ['/'] },
+                    items:[{ label: 'Statement of Accounts', icon: 'pi pi-file', routerLink: ['/app/pages/statementofaccounts'] },
+                          { label: 'Payment Advice', icon: 'pi pi-file', routerLink: ['/app/pages/paymentofadvice'] },
                           
                     ]
                 },
@@ -67,8 +67,8 @@ export class AppMenu {
                 
                 { label: 'Change Password', icon: 'pi pi-key', routerLink: ['/app/pages/changepassword'] },
                 { label: 'Reports', 
-                    items:[{ label: 'Statement of Accounts', icon: 'pi pi-file', routerLink: ['/'] },
-                          { label: 'Payment Advice', icon: 'pi pi-file', routerLink: ['/'] },
+                    items:[{ label: 'Statement of Accounts', icon: 'pi pi-file', routerLink: ['/app/pages/statementofaccounts'] },
+                          { label: 'Payment Advice', icon: 'pi pi-file', routerLink: ['/app/pages/paymentofadvice'] },
                           
                     ]
                 },
@@ -88,16 +88,16 @@ export class AppMenu {
                
                 
                 
-                { label: 'Manage Scheduling Agreement', icon: 'pi pi-calendar-clock', routerLink: ['/app/pages/managepos'] },
-                 { label: 'Manage Delivery Schedules', icon: 'pi pi-calendar-clock', routerLink: ['/app/pages/managedeliveryschedules'] },
+                { label: 'Manage Scheduling Agreement POs', icon: 'pi pi-calendar-clock', routerLink: ['/app/pages/managepos'] },
+                { label: 'Manage Delivery Schedules', icon: 'pi pi-calendar-clock', routerLink: ['/app/pages/managedeliveryschedules'] },
                 { label: 'Manage Invoice Details', icon: 'pi pi-receipt', routerLink: ['/app/pages/manageinvoices'] },
                 
                 
                 
                 { label: 'Change Password', icon: 'pi pi-key', routerLink: ['/app/pages/changepassword'] },
                 { label: 'Reports', 
-                    items:[{ label: 'Statement of Accounts', icon: 'pi pi-file', routerLink: ['/'] },
-                          { label: 'Payment Advice', icon: 'pi pi-file', routerLink: ['/'] },
+                    items:[{ label: 'Statement of Accounts', icon: 'pi pi-file', routerLink: ['/app/pages/statementofaccounts'] },
+                          { label: 'Payment Advice', icon: 'pi pi-file', routerLink: ['/app/pages/paymentofadvice'] },
                           
                     ]
                 },

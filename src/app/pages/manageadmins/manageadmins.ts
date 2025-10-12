@@ -21,6 +21,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Admin,ManageAdminsService } from '../service/manageadmins.service';
 import { AuthenticationService } from '../service/authentication.service';
+import { PanelModule } from 'primeng/panel';
 
 interface Column {
     field: string;
@@ -46,6 +47,7 @@ interface ExportColumn {
         RouterModule,
         ToolbarModule,
         RatingModule,
+        PanelModule,
         InputTextModule,
         TextareaModule,
         SelectModule,
@@ -58,7 +60,8 @@ interface ExportColumn {
         ConfirmDialogModule
     ],
     template: `
-        <p-toolbar styleClass="mb-6">
+        <p-panel>
+            <p-toolbar styleClass="mb-6">
             <ng-template #start>
               <p-iconfield>
                         <p-inputicon styleClass="pi pi-search" />
@@ -133,6 +136,9 @@ interface ExportColumn {
                 </tr>
             </ng-template>
         </p-table>
+
+        </p-panel>
+        
 
        
 

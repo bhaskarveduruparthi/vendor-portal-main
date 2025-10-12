@@ -88,7 +88,7 @@ interface DeliveryItem {
    
   
 
-  <p-table #dt [value]="items" dataKey="id" [rowHover]="true" [tableStyle]="{ 'min-width': '75rem' }" >
+  <p-table #dt [value]="items" [loading]="loading"  dataKey="id" [rowHover]="true" [tableStyle]="{ 'min-width': '75rem' }" >
     <ng-template #header>
       <tr>
          <th>Material Code</th>
@@ -131,6 +131,8 @@ export class ViewDeliverySchedules implements OnInit {
     supplierName: ''
   };
 
+  loading: boolean = true;
+
     constructor(
        public managedeliveryservice: ManageDeliverySchedulesService, private route: ActivatedRoute
     ) {}
@@ -142,6 +144,7 @@ export class ViewDeliverySchedules implements OnInit {
         this.managedeliveryservice.getDeliveryScheduleDetails(ebeln).subscribe({
           next: (response: any) => {
             const sched = (response.ZSCHED_DET?.[0]) || {};
+            this.loading = false
             this.headerInfo = {
               deliveryschedule_no: sched.ETENR || '',
               deliveryschedule_date: sched.BEDAT || '',
@@ -150,12 +153,14 @@ export class ViewDeliverySchedules implements OnInit {
               supplierCode: sched.LIFNR || '',
               supplierName: sched.NAME1 || ''
             };
+            
             this.items = (response.ZPO_DET || []).map((row: any): DeliveryItem => ({
               materialCode: row.MATNR,
               materialDescription: row.MAKTX,
               unit: row.MEINS,
               reason: '' // Or map reason if present in data
             }));
+            
           },
           error: () => {
             console.log("Error Found");

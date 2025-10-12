@@ -28,6 +28,14 @@ interface Column {
     customExportHeader?: string;
 }
 
+interface RawInvoice {
+  LIFNR: string;
+  NAME1: string;
+  EBELN: string;
+  BELNR: string;
+  BUDAT: string;
+}
+
 interface ExportColumn {
     title: string;
     dataKey: string;
@@ -78,8 +86,8 @@ interface ExportColumn {
     `,
     template: `
        
-       
-        <p-toolbar styleClass="mb-6">
+        <p-panel>
+            <p-toolbar styleClass="mb-6">
             <ng-template #start>
             
                   <p-iconfield>
@@ -98,6 +106,7 @@ interface ExportColumn {
     #dt
     [value]="invoices()"
     [rows]="10"
+    [loading]="loading"
     [columns]="cols"
     [paginator]="true"
     [globalFilterFields]="['supplier_code', 'supplier_name', 'purchase_order_no', 'invoice_no', 'invoice_date']"
@@ -118,25 +127,25 @@ interface ExportColumn {
     <ng-template #header>
         <tr>
             
-            <th pSortableColumn="supplier_code" style="min-width:16rem">
+            <th  style="min-width:16rem">
                 Supplier Code
-                <p-sortIcon field="supplier_code" />
+               
             </th>
-            <th pSortableColumn="supplier_name" style="min-width: 8rem">
+            <th  style="min-width: 8rem">
                 Supplier Name
-                <p-sortIcon field="supplier_name" />
+               
             </th>
-            <th pSortableColumn="purchase_order_no" style="min-width:10rem">
+            <th  style="min-width:10rem">
                 Purchase Order No
-                <p-sortIcon field="purchase_order_no" />
+               
             </th>
-            <th pSortableColumn="invoice_no" style="min-width: 12rem">
+            <th  style="min-width: 12rem">
                 Invoice No
-                <p-sortIcon field="invoice_no" />
+                
             </th>
-            <th pSortableColumn="invoice_date" style="min-width: 12rem">
+            <th  style="min-width: 12rem">
                 Invoice Date
-                <p-sortIcon field="invoice_date" />
+                
             </th>
             <th style="min-width: 12rem">
                 Invoice Details
@@ -162,6 +171,10 @@ interface ExportColumn {
     </ng-template>
 </p-table>
 
+        </p-panel>
+       
+        
+
 
        
 
@@ -180,7 +193,7 @@ export class ManageInvoices implements OnInit {
 
     submitted: boolean = false;
 
-    
+    loading: boolean = true;
 
     @ViewChild('dt') dt!: Table;
 
@@ -205,11 +218,22 @@ export class ManageInvoices implements OnInit {
     }
 
     loadData() {
-       this.manageinvoiceservice.getInvoices().subscribe((data:any) => {
-          
-        this.invoices.set(data);
-        
-        });
+  this.manageinvoiceservice.getInvoices().subscribe((response: any) => {
+    const rawInvoices: RawInvoice[] = response.ET_INVOICE_DETAILS || [];
+    const mappedInvoices: Invoice[] = rawInvoices.map((item: RawInvoice) => ({
+      supplier_code: item.LIFNR,
+      supplier_name: item.NAME1,
+      purchase_order_no: item.EBELN,
+      invoice_no: item.BELNR,
+      invoice_date: item.BUDAT
+    }));
+
+    console.log('Mapped Invoices:', mappedInvoices);
+
+    this.invoices.set(mappedInvoices);
+    this.loading = false;
+  });
+
 
         
 

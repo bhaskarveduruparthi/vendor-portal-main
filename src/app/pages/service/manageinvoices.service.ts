@@ -29,7 +29,9 @@ export class ManageInvoicesService {
 
     getInvoices() {
     
-    return this.http.get(`${this.url}sapdata/manageinvoicedetails`);
+    const I_DATE = '20240201';
+    const payload = { I_DATE: I_DATE };
+    return this.http.post(`${this.url}sap/get_invoice_details`, payload);
 }
 
     

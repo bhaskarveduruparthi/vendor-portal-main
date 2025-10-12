@@ -9,6 +9,8 @@ import { Changepassword } from './changepassword/changepassword';
 import { ManageDeliveryschedules } from './managedeliveryschedules/managedeliveryschedules';
 import { ViewDeliverySchedules } from './viewdeliveryschedules/viewdeliveryschedules';
 import { ViewInvoiceDetails } from './viewinvoices/viewinvoicedetails';
+import { StatementofAccounts } from './statementofaccounts/statementofaccounts';
+import { PaymentofAdvice } from './paymentofadvice/paymentofadvice';
 
 export default [
     
@@ -22,5 +24,7 @@ export default [
     {path: 'changepassword', component: Changepassword},
      {path: 'manageinvoices', component: ManageInvoices},
     {path:'managesuppliers', component: ManageSuppliers},
+    {path:'statementofaccounts', component: StatementofAccounts},
+    {path:'paymentofadvice', component: PaymentofAdvice},
     { path: '**', redirectTo: '/notfound' }
 ] as Routes;

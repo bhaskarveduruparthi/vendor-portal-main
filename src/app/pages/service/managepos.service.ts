@@ -30,8 +30,17 @@ export class ManagePOsService {
 
     getPOS() {
     
-    return this.http.get(`${this.url}sapdata/managepos`);
+    const I_DATE = '20240201';
+    const payload = { I_DATE: I_DATE };
+    return this.http.post(`${this.url}sap/get_purchaseorders`, payload);
     }
+
+    getPODetails(I_EBELN: string) {
+  const payload = { I_EBELN: I_EBELN };
+  return this.http.post(`${this.url}sap/viewpodetails`, payload);
+  }
+
+    
 
     
 }

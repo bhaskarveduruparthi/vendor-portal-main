@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { StyleClassModule } from 'primeng/styleclass';
 import { AppConfigurator } from './app.configurator';
 import { LayoutService } from '../service/layout.service';
+import { AuthenticationService } from '@/pages/service/authentication.service';
 
 @Component({
     selector: 'app-topbar',
@@ -18,7 +19,7 @@ import { LayoutService } from '../service/layout.service';
             </button>
             <a class="layout-topbar-logo" routerLink="/app">
                 
-                <span><strong>Vendor-Management</strong></span>
+                <span><strong>Vendor-Portal</strong></span>
             </a>
         </div>
 
@@ -43,7 +44,7 @@ import { LayoutService } from '../service/layout.service';
                     >
                         <i class="pi pi-palette"></i>
                     </button>
-                    <app-configurator />
+                    <app-configurator  />
                 </div>
             </div>
 
@@ -58,8 +59,9 @@ import { LayoutService } from '../service/layout.service';
                         
 
       
-                    <button type="button" class="layout-topbar-action">
-                        <i class="pi pi-user"></i>
+                    
+                    <button type="button" class="layout-topbar-action" (click)="togglelogout()">
+                        <i class="pi pi-sign-out"></i>
                         <span>Profile</span>
                     </button>
                 </div>
@@ -79,7 +81,7 @@ export class AppTopbar implements OnInit {
         }));
     }
 
-    constructor(public layoutService: LayoutService) {}
+    constructor(public layoutService: LayoutService, private authservice: AuthenticationService) {}
 
     toggleDarkMode() {
     this.layoutService.layoutConfig.update((state) => {
@@ -89,5 +91,9 @@ export class AppTopbar implements OnInit {
         return { ...state, darkTheme: newDarkTheme };
     });
 }
+
+    togglelogout(){
+        this.authservice.logout();
+    }
 
 }
