@@ -28,12 +28,13 @@ export class ManagePOsService {
     this.url = `${this._url.getApiUrl()}`
   }
 
-    getPOS() {
-    
-    const I_DATE = '20240201';
-    const payload = { I_DATE: I_DATE };
-    return this.http.post(`${this.url}sap/get_purchaseorders`, payload);
-    }
+    getPOS(i_date: string, i_date1: string) {
+  const payload = {
+    I_DATE: i_date,
+    I_DATE1: i_date1
+  };
+  return this.http.post(`${this.url}sap/get_purchaseorders`, payload);
+}
 
     getPODetails(I_EBELN: string) {
   const payload = { I_EBELN: I_EBELN };

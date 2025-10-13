@@ -15,9 +15,11 @@ import { Router, RouterModule } from '@angular/router';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
+import { formatDate } from '@angular/common';
 import { TagModule } from 'primeng/tag';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
+import { DatePickerModule } from 'primeng/datepicker';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { PanelModule } from 'primeng/panel';
 import { Product, ManagePOsService } from '../service/managepos.service';
@@ -55,6 +57,7 @@ interface ExportColumn {
         ToastModule,
         RouterModule,
         ToolbarModule,
+        DatePickerModule,
         RatingModule,
         InputTextModule,
         TextareaModule,
@@ -72,10 +75,9 @@ interface ExportColumn {
         <p-panel>
             <p-toolbar styleClass="mb-6">
             <ng-template #start>
-                <p-iconfield>
-                        <p-inputicon styleClass="pi pi-search" />
-                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
-                    </p-iconfield>
+                <p-datepicker [(ngModel)]="i_date" [iconDisplay]="'input'" placeholder="From Date" [showIcon]="true" inputId="icondisplay" style="margin-right: 10px;" />
+                <p-datepicker [(ngModel)]="i_date1" [iconDisplay]="'input'" placeholder="To Date" [showIcon]="true" inputId="icondisplay" style="margin-right: 10px;" />
+                <p-button label="Search"  icon="pi pi-search" severity="primary" (onClick)="onSearch()"  />
             </ng-template>
 
             <ng-template #end>
@@ -102,8 +104,10 @@ interface ExportColumn {
             <ng-template #caption>
                 <div class="flex items-center justify-between">
                     <h5 class="m-0">Manage Scheduling Agreement /PO</h5>
-                     
-                   
+                     <p-iconfield>
+                        <p-inputicon styleClass="pi pi-search" />
+                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
+                    </p-iconfield>
                 </div>
             </ng-template>
             <ng-template #header>
@@ -191,6 +195,8 @@ export class ManagePOs implements OnInit {
 
     cols!: Column[];
     ebeln!: string;
+    i_date: Date | null = null;    // Use Date type bound from <p-datepicker>
+    i_date1: Date | null = null;
 
     constructor(
         private productService: ManagePOsService,
@@ -207,8 +213,16 @@ export class ManagePOs implements OnInit {
         this.loadData();
     }
 
+    onSearch() {
+    this.loading = true;
+    this.loadData();
+    }
+
     loadData() {
-  this.productService.getPOS().subscribe(
+           // Format dates or fallback to empty strings (API will apply defaults)
+    const formattedDate = this.i_date ? formatDate(this.i_date, 'yyyyMMdd', 'en') : '';
+    const formattedDate1 = this.i_date1 ? formatDate(this.i_date1, 'yyyyMMdd', 'en') : '';
+  this.productService.getPOS(formattedDate,formattedDate1).subscribe(
     (response: any) => {
       // Parse and map ET_MANAGE_DELIVERY schedules (existing)
       const rawSchedules: RawDeliverySchedule[] = response.ET_SUPPLIERPOS || [];

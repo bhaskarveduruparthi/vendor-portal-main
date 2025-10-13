@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
+import { formatDate } from '@angular/common';
 import { ToolbarModule } from 'primeng/toolbar';
 import { RatingModule } from 'primeng/rating';
 import { InputTextModule } from 'primeng/inputtext';
@@ -20,6 +21,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { PanelModule } from 'primeng/panel';
 import { IconFieldModule } from 'primeng/iconfield';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DatePickerModule } from 'primeng/datepicker';
 import { Deliveryschedule, ManageDeliverySchedulesService } from '../service/managedeliveryschedules.service';
 
 
@@ -59,6 +61,7 @@ interface ExportColumn {
         RatingModule,
         InputTextModule,
         TextareaModule,
+        DatePickerModule,
         SelectModule,
         RadioButtonModule,
         InputNumberModule,
@@ -90,15 +93,14 @@ interface ExportColumn {
         <p-panel>
             <p-toolbar styleClass="mb-6">
             <ng-template #start>
-            
+            <p-datepicker [(ngModel)]="i_date" [iconDisplay]="'input'" placeholder="From Date" [showIcon]="true" inputId="icondisplay" style="margin-right: 10px;" />
+                <p-datepicker [(ngModel)]="i_date1" [iconDisplay]="'input'" placeholder="To Date" [showIcon]="true" inputId="icondisplay" style="margin-right: 10px;" />
+                <p-button label="Search"  icon="pi pi-search" severity="primary" (onClick)="onSearch()" />
                   
 
 
 
-  <p-iconfield>
-                        <p-inputicon styleClass="pi pi-search" />
-                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
-                    </p-iconfield>
+  
 
 
 
@@ -135,7 +137,10 @@ interface ExportColumn {
     <ng-template #caption>
         <div class="flex items-center justify-between">
             <h5 class="m-0">Manage Delivery Schedules</h5>
-            
+            <p-iconfield>
+                        <p-inputicon styleClass="pi pi-search" />
+                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
+                    </p-iconfield>
             
         </div>
     </ng-template>
@@ -216,6 +221,9 @@ export class ManageDeliveryschedules implements OnInit {
 
     cols!: Column[];
 
+    i_date: Date | null = null;    // Use Date type bound from <p-datepicker>
+    i_date1: Date | null = null;
+
     constructor(
         public managedeliveryservice: ManageDeliverySchedulesService,
         private messageService: MessageService,
@@ -231,28 +239,36 @@ export class ManageDeliveryschedules implements OnInit {
         this.loadData();
     }
 
-    loadData() {
- 
-  this.managedeliveryservice.getDeliveryschedules().subscribe(
-    (response: any) => {
-      const rawSchedules: RawDeliverySchedule[] = response.ET_MANAGE_DELIVERY || [];
-      const mappedSchedules: Deliveryschedule[] = rawSchedules.map((item: RawDeliverySchedule) => ({
-        supplier_name: item.NAME1,
-        purchase_order_no: item.EBELN,
-        purchase_order_date: item.AEDAT,
-        delivery_schedule_no: Number(item.ETENR),
-        delivery_schedule_date: item.EINDT
-      }));
-
-      console.log('Mapped Delivery Schedules:', mappedSchedules);
-      this.deliveryschedules.set(mappedSchedules);
-      this.loading = false;
-    },
-    (error) => {
-      console.error('Error loading delivery schedules', error);
-      this.loading = false;
+    onSearch() {
+    this.loading = true;
+    this.loadData();
     }
-  );
+
+   loadData() {
+    // Format dates or fallback to empty strings (API will apply defaults)
+    const formattedDate = this.i_date ? formatDate(this.i_date, 'yyyyMMdd', 'en') : '';
+    const formattedDate1 = this.i_date1 ? formatDate(this.i_date1, 'yyyyMMdd', 'en') : '';
+
+    this.managedeliveryservice.getDeliveryschedules(formattedDate, formattedDate1).subscribe(
+      (response: any) => {
+        const rawSchedules: RawDeliverySchedule[] = response.ET_MANAGE_DELIVERY || [];
+        const mappedSchedules: Deliveryschedule[] = rawSchedules.map((item: RawDeliverySchedule) => ({
+          supplier_name: item.NAME1,
+          purchase_order_no: item.EBELN,
+          purchase_order_date: item.AEDAT,
+          delivery_schedule_no: Number(item.ETENR),
+          delivery_schedule_date: item.EINDT
+        }));
+
+        this.deliveryschedules.set(mappedSchedules);
+        this.loading = false;
+      },
+      (error) => {
+        console.error('Error loading delivery schedules', error);
+        this.loading = false;
+      }
+    );
+  
 
 
 
