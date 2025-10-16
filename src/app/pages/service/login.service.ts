@@ -20,8 +20,8 @@ export class LoginService {
     return this.http.get(`${this.url}users/getuser`)
   }
 
-  changePassword(old_password:string, new_password:string) {
-    const userdata = {old_password, new_password};
+  changePassword(old_password:string, new_password:string, retype_password:string) {
+    const userdata = {old_password, new_password, retype_password};
     return this.http.post(`${this.url}users/changepassword`, userdata);
   }
 

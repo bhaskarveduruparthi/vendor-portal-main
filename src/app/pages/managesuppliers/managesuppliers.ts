@@ -100,39 +100,39 @@ interface ExportColumn {
                 <tr>
                     
                     
-                    <th pSortableColumn="suppliercode" style="min-width:16rem">
+                    <th style="min-width:16rem; color:#F4991A; font-weight:bold">
                         Supplier Code
-                        <p-sortIcon field="suppliercode" />
+                        
                     </th>
                     
-                    <th pSortableColumn="suppliername" style="min-width: 8rem">
+                    <th style="min-width:16rem; color:#F4991A; font-weight:bold">
                         Supplier Name
-                        <p-sortIcon field="suppliername" />
+                        
                     </th>
-                    <th pSortableColumn="city" style="min-width:10rem">
+                    <th style="min-width:16rem; color:#F4991A; font-weight:bold">
                         City
-                        <p-sortIcon field="city" />
+                        
                     </th>
                    
-                    <th pSortableColumn="email"   style="min-width: 12rem">
+                    <th style="min-width:16rem; color:#F4991A; font-weight:bold">
                         Email Id
-                        <p-sortIcon field="email" />
+                        
                     </th>
-                    <th pSortableColumn="contact_person"   style="min-width: 12rem">
+                    <th style="min-width:16rem; color:#F4991A; font-weight:bold">
                        Contact Person
-                        <p-sortIcon field="contact_person" />
+                       
                     </th>
-                     <th pSortableColumn="loginid"   style="min-width: 12rem">
+                     <th style="min-width:16rem; color:#F4991A; font-weight:bold">
                        Login Id
-                        <p-sortIcon field="loginid" />
+                        
                     </th>
-                     <th pSortableColumn="landline_number"   style="min-width: 12rem">
+                     <th style="min-width:16rem; color:#F4991A; font-weight:bold">
                       Land Line Number
-                        <p-sortIcon field="landline_number" />
+                        
                     </th>
-                    <th pSortableColumn="mobile_number"   style="min-width: 12rem">
+                    <th style="min-width:16rem; color:#F4991A; font-weight:bold">
                       Mobile Number
-                        <p-sortIcon field="mobile_number" />
+                        
                     </th>
                     
                     
@@ -157,6 +157,11 @@ interface ExportColumn {
                     
                 </tr>
             </ng-template>
+            <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5">No Suppliers found.</td>
+      </tr>
+    </ng-template>
         </p-table>
         </p-panel>
         

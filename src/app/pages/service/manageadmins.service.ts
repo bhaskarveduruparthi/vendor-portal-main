@@ -23,6 +23,14 @@ export class ManageAdminsService {
   getAdmins() {
     return this.http.get(`${this.url}users/getallusers`);
   }
+
+  createAdmin(){
+     return this.http.get(`${this.url}users/getallusers`);
+  }
+
+  
+
+
    
 
     

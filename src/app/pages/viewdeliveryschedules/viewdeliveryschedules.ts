@@ -149,7 +149,7 @@ export class ViewDeliverySchedules implements OnInit {
               deliveryschedule_no: sched.ETENR || '',
               deliveryschedule_date: sched.BEDAT || '',
               purchaseorder_no: sched.EBELN || '',
-              purchaseorder_date: sched.BEDAT || '',
+              purchaseorder_date: this.formatDateString(sched.BEDAT) || '',
               supplierCode: sched.LIFNR || '',
               supplierName: sched.NAME1 || ''
             };
@@ -170,7 +170,15 @@ export class ViewDeliverySchedules implements OnInit {
     });
   }
     
-
+  formatDateString(dateStr: string): string {
+    if (!dateStr || dateStr.length !== 8) {
+      return '';
+    }
+    const year = dateStr.substring(0, 4);
+    const month = dateStr.substring(4, 6);
+    const day = dateStr.substring(6, 8);
+    return `${day}/${month}/${year}`;
+  }
     
 
 

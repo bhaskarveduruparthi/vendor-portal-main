@@ -25,7 +25,7 @@ export class AppMenu {
     
         superadmin_model: any[] = [
             {
-                label: 'Contents',
+                label: 'Menu',
                 items: [{ label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/app'] },
                 { label: 'Manage Admins', icon: 'pi pi-users', routerLink: ['/app/pages/manageadmins'] },
                 { label: 'Manage Suppliers', icon: 'pi pi-users', routerLink: ['/app/pages/managesuppliers'] },
@@ -36,7 +36,7 @@ export class AppMenu {
                 
                 
                 
-                { label: 'Change Password', icon: 'pi pi-key', routerLink: ['/app/pages/changepassword'] },
+                
                 { label: 'Reports', 
                     items:[{ label: 'Statement of Accounts', icon: 'pi pi-file', routerLink: ['/app/pages/statementofaccounts'] },
                           { label: 'Payment Advice', icon: 'pi pi-file', routerLink: ['/app/pages/paymentofadvice'] },
@@ -54,7 +54,7 @@ export class AppMenu {
     
         admin_model: any[] = [
             {
-                label: 'Contents',
+                label: 'Menu',
                 items: [{ label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/app'] },
                
                 { label: 'Manage Suppliers', icon: 'pi pi-users', routerLink: ['/app/pages/managesuppliers'] },
@@ -65,7 +65,7 @@ export class AppMenu {
                 
                 
                 
-                { label: 'Change Password', icon: 'pi pi-key', routerLink: ['/app/pages/changepassword'] },
+                
                 { label: 'Reports', 
                     items:[{ label: 'Statement of Accounts', icon: 'pi pi-file', routerLink: ['/app/pages/statementofaccounts'] },
                           { label: 'Payment Advice', icon: 'pi pi-file', routerLink: ['/app/pages/paymentofadvice'] },
@@ -83,7 +83,7 @@ export class AppMenu {
 
         supplier_model: any[] = [
             {
-                label: 'Contents',
+                label: 'Menu',
                 items: [{ label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/app'] },
                
                 
@@ -94,7 +94,7 @@ export class AppMenu {
                 
                 
                 
-                { label: 'Change Password', icon: 'pi pi-key', routerLink: ['/app/pages/changepassword'] },
+                
                 { label: 'Reports', 
                     items:[{ label: 'Statement of Accounts', icon: 'pi pi-file', routerLink: ['/app/pages/statementofaccounts'] },
                           { label: 'Payment Advice', icon: 'pi pi-file', routerLink: ['/app/pages/paymentofadvice'] },

@@ -47,7 +47,7 @@ interface Item {
 }
 
 .po-header-grid label {
-  color: #fff;
+  color: #7b929b;
   font-weight: bold;
 }
 
@@ -56,7 +56,7 @@ interface Item {
 }
 
 .po-header-grid span {
-  color: #fff;
+  color: #7b929b;
 }
 `
     ],
@@ -95,15 +95,15 @@ interface Item {
   <ng-template pTemplate="header">
     <tr>
       
-      <th>Material Description</th>
-      <th>Material Code</th>
-      <th>Unit</th>
-      <th>Price/Unit</th>
-      <th>Gross Value</th>
-      <th>CentVat or ServiceTax(%)</th>
-      <th>Edcs(%)</th>
-      <th>SHECess(%)</th>
-      <th>VAT/CST(%)</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">Material Description</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">Material Code</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">Unit</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">Price/Unit</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">Gross Value</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">CentVat or ServiceTax(%)</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">Edcs(%)</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">SHECess(%)</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">VAT/CST(%)</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-row>
@@ -196,6 +196,16 @@ purchaseOrderItems: any[] = [];
       });
     }
   });
+  }
+
+  formatDateString(dateStr: string): string {
+    if (!dateStr || dateStr.length !== 8) {
+      return '';
+    }
+    const year = dateStr.substring(0, 4);
+    const month = dateStr.substring(4, 6);
+    const day = dateStr.substring(6, 8);
+    return `${day}/${month}/${year}`;
   }
 
 

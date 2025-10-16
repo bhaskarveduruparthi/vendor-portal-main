@@ -39,6 +39,22 @@ export class ManageDeliverySchedulesService {
   return this.http.post(`${this.url}sap/get_delivery_schedule`, payload);
   }
 
+  getstatementofaccounts(i_date: string, i_date1: string) {
+  const payload = {
+    I_DATE: i_date,
+    I_DATE1: i_date1
+  };
+  return this.http.post(`${this.url}sap/get_report_data`, payload);
+  }
+
+  getpaymentadvice(i_date: string, i_date1: string) {
+  const payload = {
+    I_DATE: i_date,
+    I_DATE1: i_date1
+  };
+  return this.http.post(`${this.url}sap/get_report1_data`, payload);
+  }
+
 
   getDeliveryScheduleDetails(I_EBELN: string) {
   const payload = { I_EBELN: I_EBELN };

@@ -78,18 +78,18 @@ interface DeliveryItem {
 <p-table #dt [value]="invoiceDetails" [loading]="loading"  [tableStyle]="{ 'min-width': '75rem' }" [scrollable]="true" scrollHeight="400px">
   <ng-template pTemplate="header">
     <tr>
-      <th>Material Description</th>
-      <th>Material Code</th>
-      <th>UOM</th>
-      <th>Quantity</th>
-      <th>Price Per Unit</th>
-      <th>Gross Value</th>
-      <th>PO Number</th>
-      <th>PO Date</th>
-      <th>Gross Weight</th>
-      <th>Tax Code</th>
-      <th>AED Rate</th>
-      <th>Service Tax</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">Material Description</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">Material Code</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">UOM</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">Quantity</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">Price Per Unit</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">Gross Value</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">PO Number</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">PO Date</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">Gross Weight</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">Tax Code</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">AED Rate</th>
+      <th style="min-width:16rem; color:#F4991A; font-weight:bold">Service Tax</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-row>

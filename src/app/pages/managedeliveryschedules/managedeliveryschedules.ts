@@ -1,5 +1,5 @@
 import { Component, OnInit, signal, ViewChild } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService, SortEvent } from 'primeng/api';
 import { Table, TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -146,27 +146,27 @@ interface ExportColumn {
     </ng-template>
     <ng-template #header>
         <tr>
-            <th  style="min-width: 8rem">
+            <th  style="min-width:16rem; color:#F4991A; font-weight:bold">
                 Supplier Name
                 
             </th>
-            <th  style="min-width:10rem">
+            <th  style="min-width:16rem; color:#F4991A; font-weight:bold">
                 Purchase Order No
                 
             </th>
-            <th  style="min-width: 12rem">
+            <th  style="min-width:16rem; color:#F4991A; font-weight:bold">
                 Purchase Order Date
                 
             </th>
-            <th  style="min-width: 12rem">
+            <th  style="min-width:16rem; color:#F4991A; font-weight:bold">
                 Delivery Schedule No
                 
             </th>
-            <th  style="min-width: 12rem">
+            <th  style="min-width:16rem; color:#F4991A; font-weight:bold">
                 Delivery Schedule Date
                
             </th>
-            <th style="min-width: 12rem">
+            <th style="min-width:16rem; color:#F4991A; font-weight:bold">
                 Delivery Schedule
             </th>
             
@@ -186,6 +186,11 @@ interface ExportColumn {
             </td>
             
         </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5">No Schedules found.</td>
+      </tr>
     </ng-template>
         </p-table>
 
@@ -244,6 +249,20 @@ export class ManageDeliveryschedules implements OnInit {
     this.loadData();
     }
 
+   
+
+
+
+   formatDateString(dateStr: string): string {
+    if (!dateStr || dateStr.length !== 8) {
+      return '';
+    }
+    const year = dateStr.substring(0, 4);
+    const month = dateStr.substring(4, 6);
+    const day = dateStr.substring(6, 8);
+    return `${day}/${month}/${year}`;
+  }
+
    loadData() {
     // Format dates or fallback to empty strings (API will apply defaults)
     const formattedDate = this.i_date ? formatDate(this.i_date, 'yyyyMMdd', 'en') : '';
@@ -255,9 +274,9 @@ export class ManageDeliveryschedules implements OnInit {
         const mappedSchedules: Deliveryschedule[] = rawSchedules.map((item: RawDeliverySchedule) => ({
           supplier_name: item.NAME1,
           purchase_order_no: item.EBELN,
-          purchase_order_date: item.AEDAT,
+          purchase_order_date: this.formatDateString(item.AEDAT),
           delivery_schedule_no: Number(item.ETENR),
-          delivery_schedule_date: item.EINDT
+          delivery_schedule_date: this.formatDateString(item.EINDT),
         }));
 
         this.deliveryschedules.set(mappedSchedules);

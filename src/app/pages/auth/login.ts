@@ -13,48 +13,70 @@ import { MessageService } from 'primeng/api';
 import { AuthenticationService } from '@/pages/service/authentication.service';
 import { ToastModule } from 'primeng/toast';
 import { LayoutService } from '@/layout/service/layout.service';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 import { PanelModule } from 'primeng/panel';
 
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [ButtonModule, CheckboxModule, InputTextModule,PanelModule, PasswordModule, ToastModule,RadioButtonModule, MessageModule, FormsModule, RouterModule, RippleModule, ],
+    imports: [ButtonModule, CheckboxModule, InputTextModule,InputIconModule,IconFieldModule,PanelModule, PasswordModule, ToastModule,RadioButtonModule, MessageModule, FormsModule, RouterModule, RippleModule, ],
     providers: [MessageService],
     template: `
         
         <p-toast />
         
-        <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-screen overflow-hidden">
-            <div class="flex flex-col items-center justify-center">
-                <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
-                    <div class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20" style="border-radius: 53px">
-                        <div class="text-center mb-8">
-                            
-                            <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Vendor-Portal Management</div>
-                            
-                        </div>
-                        <div class="flex gap-4 mb-8">
-                          <p-radioButton name="userType" value="Suppliers" [(ngModel)]="userType" inputId="suppliers"></p-radioButton>
-<label for="suppliers">For Suppliers</label>
+        <div
+            class="px-6 py-20 md:px-20 lg:px-80 flex items-center justify-center backdrop-blur-3xl bg-cover! bg-center! bg-no-repeat!"
+            style="background: linear-gradient(259deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(9, 16, 18, 1) 100%);"
+        >
+            <div class="px-8 md:px-12 lg:px-20 py-12 flex flex-col items-center gap-12 w-full backdrop-blur-2xl rounded-2xl bg-white/10 border border-white/10 max-w-sm">
+                <div class="flex flex-col items-center gap-4 w-full">
+                    
+                    <div class="flex flex-col gap-2 w-full">
+                        <div class="text-center text-3xl font-medium text-white leading-tight">Supplier Portal</div>
+                        <div class="text-center">
+                           
 
-<p-radioButton name="userType" value="Admin" [(ngModel)]="userType" inputId="admin"></p-radioButton>
-<label for="admin">For Admins</label>
-                        </div>
-                        <div>
-                           <label for="email1" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Login Id</label>
-                            <input pInputText id="email1" type="text" class="w-full md:w-120 mb-8" [(ngModel)]="loginid" />
-
-                            <label for="password1" class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2">Password</label>
-                            <p-password id="password1" [(ngModel)]="password"  [toggleMask]="true" styleClass="mb-4" [fluid]="true" [feedback]="false"></p-password>
-
-                            <div class="flex items-center justify-between mt-2 mb-8 gap-8">
-                               
-                                
-                            </div>
-                            <p-button label="Log In" styleClass="w-full" (click)="login()"></p-button>
                         </div>
                     </div>
                 </div>
+                <div class="flex flex-col items-center gap-8 w-full">
+                  
+                    <div class="flex flex-col gap-6 w-full">
+                      <div class="flex gap-4 mb-8">
+                          <p-radioButton name="userType" value="Suppliers" [(ngModel)]="userType" inputId="suppliers"></p-radioButton>
+<label for="suppliers" style="color: white;">Suppliers</label>
+
+<p-radioButton name="userType" value="Admin" [(ngModel)]="userType" inputId="admin"></p-radioButton>
+<label for="admin" style="color: white;">Admins</label>
+                        </div>
+                        <p-iconfield icon-position="left">
+                            <p-inputicon class="pi pi-user text-white/70!"></p-inputicon>
+                            <input
+                                pInputText
+                                type="text"
+                                [(ngModel)]="loginid"
+                                class="appearance-none! border! border-white/10! w-full! outline-0! bg-white/10! text-white! placeholder:text-white/70! rounded-3xl! shadow-sm!"
+                                placeholder="Login Id"
+                            />
+                        </p-iconfield>
+                        <p-iconfield icon-position="left">
+                            <p-inputicon class="pi pi-lock text-white/70!"></p-inputicon>
+                            <input
+                                pInputText
+                                type="password"
+                                [(ngModel)]="password"
+                                class="appearance-none! border! border-white/10! w-full! outline-0! bg-white/10! text-white! placeholder:text-white/70! rounded-3xl! shadow-sm!"
+                                placeholder="Password"
+                            />
+                        </p-iconfield>
+                    </div>
+                    <button pButton class="w-full! rounded-3xl! bg-surface-950! border! border-surface-950! text-white! hover:bg-surface-950/80!" (click)="login()">
+                        <span pButtonLabel>Sign In</span>
+                    </button>
+                </div>
+                
             </div>
         </div>
     `

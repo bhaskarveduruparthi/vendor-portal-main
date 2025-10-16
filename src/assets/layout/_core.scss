@@ -1,8 +1,10 @@
+/* Set base font size to 80% of 16px = 12.8px */
 html {
     height: 100%;
-    font-size: 15px;
+    font-size: 12.8px; /* 20% smaller than default */
 }
 
+/* Body styling */
 body {
     font-family: 'Lato', sans-serif;
     color: var(--text-color);
@@ -15,10 +17,41 @@ body {
     line-height: 1.2;
 }
 
+/* Links without underline */
 a {
     text-decoration: none;
 }
 
+/* Layout minimum height */
 .layout-wrapper {
     min-height: 100vh;
 }
+
+/* Override PrimeNG Sakai-NG CSS variables for font sizes */
+:root {
+    --font-size: 0.8rem;
+    --font-size-sm: 0.8rem;
+    --font-size-md: 0.9rem;
+    --font-size-lg: 1rem;
+    /* Add or adjust other CSS variables your theme uses for padding, margins, borders here if needed */
+}
+
+/* Force core PrimeNG components to scale down */
+body, 
+body .p-component, 
+.p-component {
+    font-size: 0.8rem !important;
+    /* You can add further scaling for padding, margin, or other properties if needed */
+}
+
+/* Additional example: reduce padding inside buttons */
+.p-button {
+    padding: 0.4rem 0.8rem !important;
+}
+
+/* Optional: reduce global spacing if necessary */
+.p-fieldset > legend {
+    font-size: 0.9rem !important;
+}
+
+/* Add further component-specific style overrides as necessary */

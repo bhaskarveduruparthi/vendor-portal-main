@@ -133,27 +133,27 @@ interface ExportColumn {
     <ng-template #header>
         <tr>
             
-            <th  style="min-width:16rem">
+            <th  style="min-width:16rem; color:#F4991A; font-weight:bold">
                 Supplier Code
                
             </th>
-            <th  style="min-width: 8rem">
+            <th  style="min-width:16rem; color:#F4991A; font-weight:bold">
                 Supplier Name
                
             </th>
-            <th  style="min-width:10rem">
+            <th  style="min-width:16rem; color:#F4991A; font-weight:bold">
                 Purchase Order No
                
             </th>
-            <th  style="min-width: 12rem">
+            <th  style="min-width:16rem; color:#F4991A; font-weight:bold">
                 Invoice No
                 
             </th>
-            <th  style="min-width: 12rem">
+            <th style="min-width:16rem; color:#F4991A; font-weight:bold">
                 Invoice Date
                 
             </th>
-            <th style="min-width: 12rem">
+            <th style="min-width:16rem; color:#F4991A; font-weight:bold">
                 Invoice Details
             </th>
             
@@ -174,6 +174,11 @@ interface ExportColumn {
             </td>
            
         </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5">No Invoices found.</td>
+      </tr>
     </ng-template>
 </p-table>
 
@@ -230,6 +235,16 @@ export class ManageInvoices implements OnInit {
     this.loadData();
     }
 
+    formatDateString(dateStr: string): string {
+    if (!dateStr || dateStr.length !== 8) {
+      return '';
+    }
+    const year = dateStr.substring(0, 4);
+    const month = dateStr.substring(4, 6);
+    const day = dateStr.substring(6, 8);
+    return `${day}/${month}/${year}`;
+  }
+
     loadData() {
 
         // Format dates or fallback to empty strings (API will apply defaults)
@@ -242,7 +257,7 @@ export class ManageInvoices implements OnInit {
       supplier_name: item.NAME1,
       purchase_order_no: item.EBELN,
       invoice_no: item.BELNR,
-      invoice_date: item.BUDAT
+      invoice_date: this.formatDateString(item.BUDAT)
     }));
 
     console.log('Mapped Invoices:', mappedInvoices);

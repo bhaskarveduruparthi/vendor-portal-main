@@ -113,33 +113,33 @@ interface ExportColumn {
             <ng-template #header>
                 <tr>
                     
-                    <th  style="min-width:16rem">
+                    <th  style=" color:#F4991A; font-weight:bold">
                         Supplier Code
                         
                     </th>
-                    <th  style="min-width:16rem">
+                    <th  style=" color:#F4991A; font-weight:bold">
                         Supplier Name
                        
                     </th>
-                    <th  style="min-width:16rem">
+                    <th  style=" color:#F4991A; font-weight:bold">
                         Email Id
                         
                     </th>
-                    <th  style="min-width:16rem">
+                    <th  style=" color:#F4991A; font-weight:bold">
                         Plant Code
                         
                     </th>
                     
-                    <th  style="min-width: 8rem">
+                    <th  style=" color:#F4991A; font-weight:bold">
                         PO No
                         
                     </th>
-                    <th  style="min-width:10rem">
+                    <th  style=" color:#F4991A; font-weight:bold">
                         PO Date
                         
                     </th>
-                    <th  style="min-width: 12rem">
-                        View PO Details
+                    <th  style=" color:#F4991A; font-weight:bold">
+                        PO Details
                         
                     </th>
                     
@@ -148,12 +148,12 @@ interface ExportColumn {
             <ng-template #body let-product>
                 <tr>
                     
-                    <td style="min-width: 12rem">{{ product.suppliercode }}</td>
-                    <td style="min-width: 16rem">{{ product.suppliername }}</td>
-                    <td style="min-width: 16rem">{{ product.email }}</td>
-                    <td style="min-width: 12rem">{{ product.plantcode }}</td>
-                    <td style="min-width: 16rem">{{ product.pono }}</td>
-                    <td style="min-width: 16rem">{{ product.podate }}</td>
+                    <td >{{ product.suppliercode }}</td>
+                    <td >{{ product.suppliername }}</td>
+                    <td>{{ product.email }}</td>
+                    <td >{{ product.plantcode }}</td>
+                    <td >{{ product.pono }}</td>
+                    <td >{{ product.podate }}</td>
                     
                    
                    
@@ -164,6 +164,11 @@ interface ExportColumn {
                     </td>
                 </tr>
             </ng-template>
+            <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5">No POs found.</td>
+      </tr>
+    </ng-template>
         </p-table>
         </p-panel>
         
@@ -218,6 +223,16 @@ export class ManagePOs implements OnInit {
     this.loadData();
     }
 
+    formatDateString(dateStr: string): string {
+    if (!dateStr || dateStr.length !== 8) {
+      return '';
+    }
+    const year = dateStr.substring(0, 4);
+    const month = dateStr.substring(4, 6);
+    const day = dateStr.substring(6, 8);
+    return `${day}/${month}/${year}`;
+  }
+
     loadData() {
            // Format dates or fallback to empty strings (API will apply defaults)
     const formattedDate = this.i_date ? formatDate(this.i_date, 'yyyyMMdd', 'en') : '';
@@ -232,7 +247,7 @@ export class ManagePOs implements OnInit {
         email: item.SMTP_ADDR,
         plantcode: item.WERKS,
         pono: item.EBELN,
-        podate: item.BEDAT
+        podate: this.formatDateString(item.BEDAT)
       }));
       console.log('Mapped Delivery Schedules:', mappedSchedules);
       this.products.set(mappedSchedules);

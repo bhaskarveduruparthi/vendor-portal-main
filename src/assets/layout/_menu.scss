@@ -2,13 +2,13 @@
 
 .layout-sidebar {
     position: fixed;
-    width: 20rem;
+    width: 22.5rem;
     height: calc(100vh - 8rem);
     z-index: 999;
     overflow-y: auto;
     user-select: none;
-    top: 6rem;
-    left: 2rem;
+    top: 3rem;
+    left: 1rem;
     transition:
         transform var(--layout-section-transition-duration),
         left var(--layout-section-transition-duration);
@@ -24,8 +24,8 @@
 
     .layout-root-menuitem {
         > .layout-menuitem-root-text {
-            font-size: 0.857rem;
-            text-transform: uppercase;
+            font-size: 1rem;
+            
             font-weight: 700;
             color: var(--text-color);
             margin: 0.75rem 0;
